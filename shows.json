@@ -1,0 +1,20 @@
+{
+  "shows": [
+    {
+      "title": "House of the Dragon Season 3",
+      "platform": "HBO Max",
+      "release_date_text": "June 21, 2026",
+      "countdown_date": "June 21, 2026 21:00:00 EDT",
+      "description": "Track the live Eastern Standard Time countdown to the highly anticipated premiere of the Targaryen civil war."
+    },
+    {
+      "title": "Avatar: The Last Airbender Season 2",
+      "platform": "Netflix US",
+      "release_date_text": "June 25, 2026",
+      "countdown_date": "June 25, 2026 03:01:00 EDT",
+      "description": "Live release countdown synchronized with Midnight Pacific Time Netflix drops for United States audiences."
+    }
+  ],
+  "seo_title": "Never Miss US Streaming Premiere Times",
+  "seo_text": "Staying updated with exact release times can be tricky due to timezone differences. Our smart countdown clocks are synced to official network release schedules in EST and PT, offering the most accurate tracking tool for cord-cutters in the United States."
+}
