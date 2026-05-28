@@ -51,20 +51,17 @@ backup_data = {
 
 try:
     if not API_KEY:
-        raise ValueError("API Key is missing in GitHub Secrets!")
+        raise ValueError("API Key is missing!")
         
     response = requests.post(url, headers=headers, json=payload, timeout=15)
     response_data = response.json()
     
     ai_text = response_data['candidates'][0]['content']['parts'][0]['text'].strip()
     
-    if ai_text.startswith("
-```"):
-        ai_text = ai_text.split("```")[1]
-        if ai_text.startswith("json"):
-            ai_text = ai_text[4:]
+    # Clean code blocks simply without any if-conditions
+    ai_text = ai_text.replace("```json", "").replace("```", "").strip()
             
-    cleaned_json = json.loads(ai_text.strip())
+    cleaned_json = json.loads(ai_text)
     
     with open('shows.json', 'w') as f:
         json.dump(cleaned_json, f, indent=2)
