@@ -1,0 +1,35 @@
+name: Dynamic US Countdown Auto Updater
+
+on:
+  schedule:
+    # Roz raat ko 11:30 PM IST (6:00 PM UTC) par automatic chalega
+    - cron: '30 18 * * *'
+  workflow_dispatch:
+
+jobs:
+  build-and-update:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+
+    - name: Install Dependencies
+      run: pip install requests
+
+    - name: Execute AI Script
+      env:
+        AI_API_KEY: ${{ secrets.AI_API_KEY }}
+      run: python update_shows.py
+
+    - name: Push Updates to Repo
+      run: |
+        git config --global user.name "US-Countdown-Bot"
+        git config --global user.email "bot@github.com"
+        git add shows.json
+        git commit -m "AI Update: Refreshed US Trending Cards" || exit 0
+        git push
