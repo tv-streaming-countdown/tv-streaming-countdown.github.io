@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latest US TV Series & Movies Countdown - Live Release Timers</title>
+    <meta name="description" content="Track upcoming Hollywood movies and US web series release dates. Live countdown timers for the most anticipated shows on Netflix US, HBO Max, and Hulu.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root { 
+            --bg: #0b0f19; 
+            --card-bg: rgba(22, 29, 49, 0.7); 
+            --accent: #38bdf8; 
+            --accent-glow: rgba(56, 189, 248, 0.15);
+            --text-main: #f1f5f9; 
+            --text-muted: #94a3b8;
+            --border: rgba(255, 255, 255, 0.06);
+        }
+        
+        body { 
+            font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; 
+            background-color: var(--bg); 
+            color: var(--text-main); 
+            margin: 0; 
+            padding: 40px 20px; 
+            text-align: center; 
+            -webkit-font-smoothing: antialiased;
+            background-image: radial-gradient(circle at 50% -20%, rgba(56, 189, 248, 0.12), transparent 50%);
+        }
+
+        .wrapper { max-width: 1050px; margin: 0 auto; }
+        
+        .header { margin: 40px 0 60px 0; }
+        .header h1 { 
+            font-size: 3rem; 
+            font-weight: 800; 
+            letter-spacing: -1.5px; 
+            margin-bottom: 12px; 
+            background: linear-gradient(135deg, #ffffff 40%, #a5f3fc 100%); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+        }
+        .header p { color: var(--text-muted); font-size: 1.15rem; font-weight: 400; max-width: 600px; margin: 0 auto; line-height: 1.5; }
+
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+            gap: 30px; 
+            margin-top: 30px; 
+        }
+
+        .card { 
+            background: var(--card-bg); 
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 24px; 
+            padding: 32px; 
+            text-align: left; 
+            border: 1px solid var(--border); 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3); 
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .card:hover { 
+            transform: translateY(-6px); 
+            border-color: rgba(56, 189, 248, 0.3);
+            box-shadow: 0 30px 60px rgba(56, 189, 248, 0.08);
+        }
+
+        .card h2 { margin: 0 0 12px 0; font-size: 1.55rem; color: #fff; font-weight: 700; letter-spacing: -0.5px; }
+        
+        .badge { 
+            display: inline-block; 
+            background: rgba(56, 189, 248, 0.08); 
+            color: var(--accent); 
+            padding: 6px 14px; 
+            border-radius: 100px; 
+            font-size: 0.78rem; 
+            font-weight: 600; 
+            margin-bottom: 20px; 
+            text-transform: uppercase; 
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(56, 189, 248, 0.15);
+        }
+
+        .timer { 
+            display: flex; 
+            justify-content: space-between; 
+            background: rgba(9, 13, 22, 0.6); 
+            padding: 16px; 
+            border-radius: 16px; 
+            margin: 24px 0; 
+            border: 1px solid var(--border); 
+        }
+        .t-block { text-align: center; flex: 1; position: relative; }
+        .t-block:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 25%;
+            height: 50%;
+            width: 1px;
+            background: rgba(255, 255, 255, 0.08);
+        }
+        .t-block span { display: block; font-size: 1.9rem; font-weight: 700; color: #fff; font-variant-numeric: tabular-nums; }
+        .t-block label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px; margin-top: 2px; display: block; }
+
+        .desc { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin: 0; font-weight: 400; }
+        
+        .seo-section { 
+            text-align: left; 
+            margin-top: 80px; 
+            background: var(--card-bg); 
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 40px; 
+            border-radius: 24px; 
+            border: 1px solid var(--border); 
+            color: var(--text-muted); 
+            font-size: 1rem; 
+            line-height: 1.7; 
+        }
+        .seo-section h3 { color: #fff; font-size: 1.4rem; margin-top: 0; font-weight: 700; letter-spacing: -0.5px; }
+
+        /* Loading fallback stylings */
+        .loading { font-size: 1.2rem; color: var(--text-muted); padding: 40px; }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+        <div class="header">
+            <h1>US Streaming Countdown</h1>
+            <p>Real-time aesthetic countdowns for major US platforms including HBO Max, Netflix, Hulu, and Prime Video.</p>
+        </div>
+
+        <div class="grid" id="shows-grid">
+            <div class="loading">Loading upcoming US premieres...</div>
+        </div>
+
+        <div class="seo-section" id="seo-content">
+            <!-- Dynamic SEO Text -->
+        </div>
+    </div>
+
+    <script>
+        fetch('shows.json?t=' + new Date().getTime())
+            .then(res => res.json())
+            .then(data => {
+                const grid = document.getElementById('shows-grid');
+                grid.innerHTML = ''; 
+                
+                data.shows.forEach((show, index) => {
+                    const idPrefix = `show-${index}`;
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.innerHTML = `
+                        <span class="badge">${show.platform} • ${show.release_date_text}</span>
+                        <h2>${show.title}</h2>
+                        <div class="timer">
+                            <div class="t-block"><span id="${idPrefix}-d">00</span><label>Days</label></div>
+                            <div class="t-block"><span id="${idPrefix}-h">00</span><label>Hrs</label></div>
+                            <div class="t-block"><span id="${idPrefix}-m">00</span><label>Min</label></div>
+                            <div class="t-block"><span id="${idPrefix}-s">00</span><label>Sec</label></div>
+                        </div>
+                        <p class="desc">${show.description}</p>
+                    `;
+                    grid.appendChild(card);
+                    setupTimer(show.countdown_date, idPrefix);
+                });
+
+                document.getElementById('seo-content').innerHTML = `<h3>${data.seo_title}</h3><p>${data.seo_text}</p>`;
+            }).catch(err => {
+                document.getElementById('shows-grid').innerHTML = '<div class="loading">Failed to load timers. Please refresh.</div>';
+            });
+
+        function setupTimer(dateStr, idPrefix) {
+            const target = new Date(dateStr).getTime();
+            setInterval(() => {
+                const now = new Date().getTime();
+                const diff = target - now;
+                if(diff < 0) {
+                    document.getElementById(idPrefix + '-d').innerText = '00';
+                    document.getElementById(idPrefix + '-h').innerText = '00';
+                    document.getElementById(idPrefix + '-m').innerText = '00';
+                    document.getElementById(idPrefix + '-s').innerText = '00';
+                    return;
+                }
+
+                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+                document.getElementById(idPrefix + '-d').innerText = d < 10 ? '0'+d : d;
+                document.getElementById(idPrefix + '-h').innerText = h < 10 ? '0'+h : h;
+                document.getElementById(idPrefix + '-m').innerText = m < 10 ? '0'+m : m;
+                document.getElementById(idPrefix + '-s').innerText = s < 10 ? '0'+s : s;
+            }, 1000);
+        }
+    </script>
+</body>
+  </html>
