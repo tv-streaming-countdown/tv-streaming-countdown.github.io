@@ -7,12 +7,12 @@
     <meta name="description" content="Track upcoming Hollywood movies and US web series release dates. Live countdown timers for the most anticipated shows on Netflix US, HBO Max, and Hulu.">
     <meta name="google-site-verification" content="5xE_ljStcPCLEZ_ZXLqMUyp3Z1UHxlQYot3v4jtuPOY" />
     <!-- Google Discover Requirement -->
-<meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="robots" content="index, follow, max-image-preview:large">
 
-<!-- Discover Image Link -->
-<meta property="og:image" content="https://tv-streaming-countdown.github.io/House-of-the-Dragon-Season-3.webp">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="675">
+    <!-- Discover Image Link -->
+    <meta property="og:image" content="https://tv-streaming-countdown.github.io/House-of-the-Dragon-Season-3.webp">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="675">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -25,6 +25,13 @@
             --text-main: #f1f5f9; 
             --text-muted: #94a3b8;
             --border: rgba(255, 255, 255, 0.06);
+            
+            /* US Brand Platforms Colors */
+            --netflix: #e50914;
+            --hbo: #9933ff;
+            --hulu: #1ce783;
+            --prime: #00a8e1;
+            --theaters: #eab308;
         }
         
         body { 
@@ -52,11 +59,21 @@
         }
         .header p { color: var(--text-muted); font-size: 1.15rem; font-weight: 400; max-width: 600px; margin: 0 auto; line-height: 1.5; }
 
+        .section-title {
+            text-align: left;
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin: 60px 0 20px 0;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #fff 60%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
         .grid { 
             display: grid; 
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
             gap: 30px; 
-            margin-top: 30px; 
         }
 
         .card { 
@@ -74,16 +91,20 @@
         }
         .card:hover { 
             transform: translateY(-6px); 
-            border-color: rgba(56, 189, 248, 0.3);
-            box-shadow: 0 30px 60px rgba(56, 189, 248, 0.08);
+            box-shadow: 0 30px 60px rgba(255, 255, 255, 0.02);
         }
+
+        /* Dynamic Border Glows based on Platforms */
+        .card.netflix:hover { border-color: rgba(229, 9, 20, 0.4); }
+        .card.hbo:hover { border-color: rgba(153, 51, 255, 0.4); }
+        .card.hulu:hover { border-color: rgba(28, 231, 131, 0.4); }
+        .card.prime:hover { border-color: rgba(0, 168, 225, 0.4); }
+        .card.theaters:hover { border-color: rgba(234, 179, 8, 0.4); }
 
         .card h2 { margin: 0 0 12px 0; font-size: 1.55rem; color: #fff; font-weight: 700; letter-spacing: -0.5px; }
         
         .badge { 
             display: inline-block; 
-            background: rgba(56, 189, 248, 0.08); 
-            color: var(--accent); 
             padding: 6px 14px; 
             border-radius: 100px; 
             font-size: 0.78rem; 
@@ -91,8 +112,17 @@
             margin-bottom: 20px; 
             text-transform: uppercase; 
             letter-spacing: 0.5px;
-            border: 1px solid rgba(56, 189, 248, 0.15);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            color: var(--text-main);
         }
+
+        /* Badge Platform colors */
+        .netflix .badge { color: var(--netflix); border-color: rgba(229, 9, 20, 0.2); background: rgba(229, 9, 20, 0.05); }
+        .hbo .badge { color: var(--hbo); border-color: rgba(153, 51, 255, 0.2); background: rgba(153, 51, 255, 0.05); }
+        .hulu .badge { color: var(--hulu); border-color: rgba(28, 231, 131, 0.2); background: rgba(28, 231, 131, 0.05); }
+        .prime .badge { color: var(--prime); border-color: rgba(0, 168, 225, 0.2); background: rgba(0, 168, 225, 0.05); }
+        .theaters .badge { color: var(--theaters); border-color: rgba(234, 179, 8, 0.2); background: rgba(234, 179, 8, 0.05); }
 
         .timer { 
             display: flex; 
@@ -118,6 +148,19 @@
 
         .desc { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin: 0; font-weight: 400; }
         
+        /* Trending Style Elements */
+        .rank-tag {
+            float: right;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .netflix .rank-tag { color: var(--netflix); }
+        .hbo .rank-tag { color: var(--hbo); }
+        .hulu .rank-tag { color: var(--hulu); }
+        .prime .rank-tag { color: var(--prime); }
+
         .seo-section { 
             text-align: left; 
             margin-top: 80px; 
@@ -133,8 +176,7 @@
         }
         .seo-section h3 { color: #fff; font-size: 1.4rem; margin-top: 0; font-weight: 700; letter-spacing: -0.5px; }
 
-        /* Loading fallback stylings */
-        .loading { font-size: 1.2rem; color: var(--text-muted); padding: 40px; }
+        .loading { font-size: 1.2rem; color: var(--text-muted); padding: 40px; text-align: center; width: 100%; grid-column: 1/-1; }
     </style>
 </head>
 <body>
@@ -142,13 +184,22 @@
     <div class="wrapper">
         <div class="header">
             <h1>US Streaming Countdown</h1>
-            <p>Real-time aesthetic countdowns for major US platforms including HBO Max, Netflix, Hulu, and Prime Video.</p>
+            <p>Real-time aesthetic countdowns and charts for major US platforms including Netflix, HBO Max, Hulu, and Prime Video.</p>
         </div>
 
+        <!-- Section 1: Countdowns -->
+        <div class="section-title">🇺🇸 Anticipated US Premieres</div>
         <div class="grid" id="shows-grid">
             <div class="loading">Loading upcoming US premieres...</div>
         </div>
 
+        <!-- Section 2: Now Trending -->
+        <div class="section-title">🔥 What Americans Are Watching Right Now</div>
+        <div class="grid" id="trending-grid">
+            <div class="loading">Loading live US streaming charts...</div>
+        </div>
+
+        <!-- SEO Section -->
         <div class="seo-section" id="seo-content">
             <!-- Dynamic SEO Text -->
         </div>
@@ -158,13 +209,33 @@
         fetch('shows.json?t=' + new Date().getTime())
             .then(res => res.json())
             .then(data => {
+                // Helper to get platform CSS class names
+                const getPlatformClass = (platformStr) => {
+                    const p = platformStr.toLowerCase();
+                    if(p.includes('netflix')) return 'netflix';
+                    if(p.includes('hbo') || p.includes('max')) return 'hbo';
+                    if(p.includes('hulu')) return 'hulu';
+                    if(p.includes('prime') || p.includes('amazon')) return 'prime';
+                    if(p.includes('theater')) return 'theaters';
+                    return '';
+                };
+
+                // 1. Render Upcoming Countdowns
                 const grid = document.getElementById('shows-grid');
                 grid.innerHTML = ''; 
                 
-                data.shows.forEach((show, index) => {
+                // Support both old structure data.shows or new structure data.upcoming_countdowns
+                const countdownList = data.upcoming_countdowns || data.shows || [];
+                
+                if(countdownList.length === 0) {
+                    grid.innerHTML = '<div class="loading">No upcoming shows found.</div>';
+                }
+
+                countdownList.forEach((show, index) => {
                     const idPrefix = `show-${index}`;
                     const card = document.createElement('div');
-                    card.className = 'card';
+                    const platformClass = getPlatformClass(show.platform);
+                    card.className = `card ${platformClass}`;
                     card.innerHTML = `
                         <span class="badge">${show.platform} • ${show.release_date_text}</span>
                         <h2>${show.title}</h2>
@@ -180,21 +251,51 @@
                     setupTimer(show.countdown_date, idPrefix);
                 });
 
+                // 2. Render Multi-Platform Live Trending List
+                const trendingGrid = document.getElementById('trending-grid');
+                trendingGrid.innerHTML = '';
+
+                if(data.now_trending && data.now_trending.length > 0) {
+                    data.now_trending.forEach((item) => {
+                        const card = document.createElement('div');
+                        const platformClass = getPlatformClass(item.platform);
+                        card.className = `card ${platformClass}`;
+                        card.innerHTML = `
+                            <div>
+                                <span class="rank-tag">${item.rank || '#1 Trending'}</span>
+                                <span class="badge">${item.platform}</span>
+                            </div>
+                            <h2>${item.title}</h2>
+                            <p class="desc">${item.trending_reason}</p>
+                        `;
+                        trendingGrid.appendChild(card);
+                    });
+                } else {
+                    trendingGrid.innerHTML = '<div class="loading">Trending charts update scheduled tonight.</div>';
+                }
+
+                // 3. Render SEO Paragraphs
                 document.getElementById('seo-content').innerHTML = `<h3>${data.seo_title}</h3><p>${data.seo_text}</p>`;
             }).catch(err => {
                 document.getElementById('shows-grid').innerHTML = '<div class="loading">Failed to load timers. Please refresh.</div>';
+                document.getElementById('trending-grid').innerHTML = '<div class="loading">Failed to load charts.</div>';
             });
 
         function setupTimer(dateStr, idPrefix) {
             const target = new Date(dateStr).getTime();
-            setInterval(() => {
+            const timerInterval = setInterval(() => {
                 const now = new Date().getTime();
                 const diff = target - now;
+                
+                const dEl = document.getElementById(idPrefix + '-d');
+                if(!dEl) { clearInterval(timerInterval); return; } // Break loop if elements removed
+
                 if(diff < 0) {
                     document.getElementById(idPrefix + '-d').innerText = '00';
                     document.getElementById(idPrefix + '-h').innerText = '00';
                     document.getElementById(idPrefix + '-m').innerText = '00';
                     document.getElementById(idPrefix + '-s').innerText = '00';
+                    clearInterval(timerInterval);
                     return;
                 }
 
@@ -211,4 +312,4 @@
         }
     </script>
 </body>
-  </html>
+</html>
