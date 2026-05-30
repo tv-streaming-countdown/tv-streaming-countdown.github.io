@@ -1,6 +1,13 @@
 {
   "shows": [
     {
+      "title": "Superman (2025/2026 Movie)",
+      "platform": "Theaters",
+      "release_date_text": "July 11, 2026",
+      "countdown_date": "July 11, 2026 00:00:00 EDT",
+      "description": "Track the live countdown to the cinematic release of James Gunn's highly anticipated Superman movie in US theaters."
+    },
+    {
       "title": "House of the Dragon Season 3",
       "platform": "HBO Max",
       "release_date_text": "June 21, 2026",
@@ -15,6 +22,6 @@
       "description": "Get ready for the intense kitchen drama with our live countdown synchronized for official Hulu US streaming launch times."
     }
   ],
-  "seo_title": "Never Miss US Streaming Premiere Times",
-  "seo_text": "Our smart countdown clocks are synced to official network release schedules in EST and PT, offering the most accurate tracking tool for entertainment lovers in the United States."
+  "seo_title": "Upcoming US Movies and Streaming Premiere Times",
+  "seo_text": "Get the most accurate live countdown clocks for highly anticipated Hollywood movies hitting theaters and TV shows premiering on Netflix, Hulu, and HBO Max synced directly to official US release schedules."
 }
