@@ -2,9 +2,13 @@ name: Dynamic US Countdown Auto Updater
 
 on:
   schedule:
-    # Roz raat ko 11:30 PM IST (6:00 PM UTC) par automatic chalega
-    - cron: '30 18 * * *'
+    # US/Eastern Time ke hisab se roz raat ko 12:05 AM (Midnight) par automatic chalega (4:05 AM UTC)
+    - cron: '5 4 * * *'
   workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
 
 jobs:
   build-and-update:
@@ -19,7 +23,8 @@ jobs:
         python-version: '3.x'
 
     - name: Install Dependencies
-      run: pip install requests
+      run: |
+        pip install requests
 
     - name: Execute AI Script
       env:
@@ -28,8 +33,8 @@ jobs:
 
     - name: Push Updates to Repo
       run: |
-        git config --global user.name "US-Countdown-Bot"
-        git config --global user.email "bot@github.com"
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git add shows.json
-        git commit -m "AI Update: Refreshed US Trending Cards" || exit 0
+        git diff-index --quiet HEAD || git commit -m "AI US Update: Refreshed US Trending Cards"
         git push
