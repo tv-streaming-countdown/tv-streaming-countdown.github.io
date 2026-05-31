@@ -6,6 +6,13 @@
     <title>Latest US TV Series & Movies Countdown - Live Release Timers</title>
     <meta name="description" content="Track upcoming Hollywood movies and US web series release dates. Live countdown timers for the most anticipated shows on Netflix US, HBO Max, and Hulu.">
     <meta name="google-site-verification" content="5xE_ljStcPCLEZ_ZXLqMUyp3Z1UHxlQYot3v4jtuPOY" />
+    
+    <meta name="robots" content="max-image-preview:large" />
+    
+    <meta property="og:image" id="discover-og-image" content="" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="675" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -85,6 +92,33 @@
         .card:hover { 
             transform: translateY(-6px); 
             box-shadow: 0 30px 60px rgba(255, 255, 255, 0.02);
+        }
+
+        /* Trailer Card Specific Custom Styling */
+        .trailer-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin: 0 0 15px 0;
+            color: #fff;
+            letter-spacing: -0.3px;
+            line-height: 1.4;
+        }
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        }
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
         }
 
         /* Dynamic Border Glows based on Platforms */
@@ -173,35 +207,30 @@
     </style>
 </head>
 <body>
-
-    <!-- Google Discover Image Injector (Strictly Hidden from Users) -->
-<div style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;" id="discover-hidden-images">
-    <img src="maxresdefault.webp" alt="Best Upcoming 2026 Movies Hollywood Countdowns" width="1200" height="675">
-    <img src="hbo-discover.webp" alt="House of the Dragon Season 3 Live Release Countdown US" width="1200" height="675">
-</div>
     
     <div class="wrapper">
         <div class="header">
             <h1>US Streaming Countdown</h1>
-            <p>Real-time aesthetic countdowns and charts for major US platforms including Netflix, HBO Max, Hulu, and Prime Video.</p>
+            <p>Real-time aesthetic countdowns, charts, and hot trailers for major US platforms including Netflix, HBO Max, Hulu, and Prime Video.</p>
         </div>
 
-        <!-- Section 1: Countdowns -->
+        <div class="section-title">🎬 Hot New Trailers</div>
+        <div class="grid" id="trailers-grid">
+            <div class="loading">Loading hot movie & series trailers...</div>
+        </div>
+
         <div class="section-title">🇺🇸 Anticipated US Premieres</div>
         <div class="grid" id="shows-grid">
             <div class="loading">Loading upcoming US premieres...</div>
         </div>
 
-        <!-- Section 2: Now Trending -->
         <div class="section-title">🔥 What Americans Are Watching Right Now</div>
         <div class="grid" id="trending-grid">
             <div class="loading">Loading live US streaming charts...</div>
         </div>
 
-        <!-- SEO Section -->
         <div class="seo-section" id="seo-content">
-            <!-- Dynamic SEO Text -->
-        </div>
+            </div>
     </div>
 
     <script>
@@ -219,11 +248,44 @@
                     return '';
                 };
 
+                // 0. Render Latest Trailers & Inject Hidden Image for Discover Link
+                const trailersGrid = document.getElementById('trailers-grid');
+                trailersGrid.innerHTML = '';
+
+                if(data.latest_trailers && data.latest_trailers.length > 0) {
+                    // Set the first trailer's high-res YouTube image into the hidden og:image meta tag for Google Discover
+                    const firstVideoId = data.latest_trailers[0].youtube_video_id;
+                    if(firstVideoId) {
+                        document.getElementById('discover-og-image').setAttribute('content', `https://img.youtube.com/vi/${firstVideoId}/maxresdefault.jpg`);
+                    }
+
+                    data.latest_trailers.forEach((trailer) => {
+                        const card = document.createElement('div');
+                        const platformClass = getPlatformClass(trailer.platform || '');
+                        card.className = `card ${platformClass}`;
+                        card.innerHTML = `
+                            <span class="badge">${trailer.platform || 'Trending'} • New Trailer</span>
+                            <h3 class="trailer-title">${trailer.title}</h3>
+                            <div class="video-wrapper">
+                                <iframe 
+                                    src="https://www.youtube.com/embed/${trailer.youtube_video_id}" 
+                                    title="${trailer.title} Official Trailer" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                    allowfullscreen 
+                                    loading="lazy">
+                                </iframe>
+                            </div>
+                        `;
+                        trailersGrid.appendChild(card);
+                    });
+                } else {
+                    trailersGrid.innerHTML = '<div class="loading">No trailers available right now.</div>';
+                }
+
                 // 1. Render Upcoming Countdowns
                 const grid = document.getElementById('shows-grid');
                 grid.innerHTML = ''; 
                 
-                // Support both old structure data.shows or new structure data.upcoming_countdowns
                 const countdownList = data.upcoming_countdowns || data.shows || [];
                 
                 if(countdownList.length === 0) {
@@ -276,6 +338,7 @@
                 // 3. Render SEO Paragraphs
                 document.getElementById('seo-content').innerHTML = `<h3>${data.seo_title}</h3><p>${data.seo_text}</p>`;
             }).catch(err => {
+                document.getElementById('trailers-grid').innerHTML = '<div class="loading">Failed to load trailers.</div>';
                 document.getElementById('shows-grid').innerHTML = '<div class="loading">Failed to load timers. Please refresh.</div>';
                 document.getElementById('trending-grid').innerHTML = '<div class="loading">Failed to load charts.</div>';
             });
@@ -287,7 +350,7 @@
                 const diff = target - now;
                 
                 const dEl = document.getElementById(idPrefix + '-d');
-                if(!dEl) { clearInterval(timerInterval); return; } // Break loop if elements removed
+                if(!dEl) { clearInterval(timerInterval); return; } 
 
                 if(diff < 0) {
                     document.getElementById(idPrefix + '-d').innerText = '00';
