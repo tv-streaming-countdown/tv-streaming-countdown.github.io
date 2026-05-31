@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://tv-streaming-countdown.github.io/sitemap.xml
