@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latest US TV Series & Movies Countdown - Live Release Timers</title>
+    <meta name="description" content="Track upcoming Hollywood movies and US web series release dates. Live countdown timers for the most anticipated shows on Netflix US, HBO Max, and Hulu.">
+    <meta name="google-site-verification" content="5xE_ljStcPCLEZ_ZXLqMUyp3Z1UHxlQYot3v4jtuPOY" />
+    <meta name="robots" content="max-image-preview:large" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root { 
+            --bg: #0b0f19; 
+            --card-bg: rgba(22, 29, 49, 0.7); 
+            --accent: #38bdf8; 
+            --accent-glow: rgba(56, 189, 248, 0.15);
+            --text-main: #f1f5f9; 
+            --text-muted: #94a3b8;
+            --border: rgba(255, 255, 255, 0.06);
+            
+            --netflix: #e50914;
+            --hbo: #9933ff;
+            --hulu: #1ce783;
+            --prime: #00a8e1;
+            --theaters: #eab308;
+        }
+        
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: var(--bg); 
+            color: var(--text-main); 
+            margin: 0; 
+            padding: 40px 20px; 
+            text-align: center; 
+            background-image: radial-gradient(circle at 50% -20%, rgba(56, 189, 248, 0.12), transparent 50%);
+        }
+
+        .wrapper { max-width: 1050px; margin: 0 auto; }
+        .header { margin: 40px 0 30px 0; }
+        .header h1 { 
+            font-size: 3rem; font-weight: 800; letter-spacing: -1.5px; margin-bottom: 12px; 
+            background: linear-gradient(135deg, #ffffff 40%, #a5f3fc 100%); 
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
+        }
+        .header p { color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto; line-height: 1.5; }
+
+        /* Step 1: Filter Bar Styling */
+        .filter-container {
+            margin: 20px 0 30px 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .filter-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 10px 18px;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .filter-btn:hover, .filter-btn.active {
+            color: #fff;
+            border-color: var(--accent);
+            background: var(--accent-glow);
+            transform: translateY(-2px);
+        }
+
+        /* Step 3: Search Bar Styling */
+        .search-container {
+            margin: 0 auto 50px auto;
+            max-width: 500px;
+            position: relative;
+        }
+        .search-input {
+            width: 100%;
+            padding: 15px 25px;
+            padding-left: 50px;
+            border-radius: 100px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            color: #fff;
+            font-family: inherit;
+            font-size: 1rem;
+            outline: none;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+        .search-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 20px var(--accent-glow);
+            background: rgba(22, 29, 49, 0.9);
+        }
+        .search-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+
+        .section-title {
+            text-align: left; font-size: 1.7rem; font-weight: 700; margin: 60px 0 20px 0;
+            color: #fff;
+        }
+
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+            gap: 25px; 
+        }
+
+        .card { 
+            background: var(--card-bg); 
+            backdrop-filter: blur(12px);
+            border-radius: 24px; 
+            overflow: hidden; /* Image corners round karne ke liye */
+            text-align: left; 
+            border: 1px solid var(--border); 
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, transform 0.3s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Card Inner Padding (For Text Section) */
+        .card-body {
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        /* Poster Image Styling for Discover */
+        .card-poster {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-bottom: 1px solid var(--border);
+            transition: transform 0.4s ease;
+        }
+        .card:hover .card-poster {
+            transform: scale(1.03);
+        }
+
+        /* Filtering & Search Animate */
+        .card.hidden { display: none !important; }
+
+        .card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.2); }
+
+        /* Platform specific glows */
+        .card.netflix:hover { border-color: var(--netflix); box-shadow: 0 10px 30px rgba(229, 9, 20, 0.1); }
+        .card.hbo:hover { border-color: var(--hbo); box-shadow: 0 10px 30px rgba(153, 51, 255, 0.1); }
+        .card.hulu:hover { border-color: var(--hulu); box-shadow: 0 10px 30px rgba(28, 231, 131, 0.1); }
+        .card.prime:hover { border-color: var(--prime); box-shadow: 0 10px 30px rgba(0, 168, 225, 0.1); }
+
+        .badge { 
+            position: absolute; top: 15px; left: 15px; z-index: 10;
+            display: inline-block; padding: 5px 12px; border-radius: 100px; font-size: 0.75rem; 
+            font-weight: 700; border: 1px solid var(--border); backdrop-filter: blur(8px);
+        }
+
+        /* Badge Platform colors */
+        .netflix .badge { color: #fff; border-color: var(--netflix); background: rgba(229, 9, 20, 0.8); }
+        .hbo .badge { color: #fff; border-color: var(--hbo); background: rgba(153, 51, 255, 0.8); }
+        .hulu .badge { color: #000; border-color: var(--hulu); background: rgba(28, 231, 131, 0.9); }
+        .prime .badge { color: #fff; border-color: var(--prime); background: rgba(0, 168, 225, 0.8); }
+        .theaters .badge { color: #000; border-color: var(--theaters); background: rgba(234, 179, 8, 0.9); }
+
+        .timer { 
+            display: flex; justify-content: space-between; background: rgba(0,0,0,0.3); 
+            padding: 12px; border-radius: 16px; margin: 15px 0; border: 1px solid var(--border); 
+        }
+        .t-block span { display: block; font-size: 1.6rem; font-weight: 800; color: #fff; }
+        .t-block label { font-size: 0.6rem; color: var(--text-muted); text-transform: uppercase; }
+
+        /* Step 2: Reaction Buttons Styling */
+        .reaction-container {
+            display: flex;
+            gap: 8px;
+            margin-top: auto; /* Buttons ko hamesha card ke niche lock rakhega */
+            padding-top: 15px;
+            border-top: 1px solid var(--border);
+        }
+        .reaction-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+        .reaction-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: scale(1.05);
+        }
+        .reaction-btn.active {
+            background: var(--accent-glow);
+            border-color: var(--accent);
+            color: #fff;
+        }
+        .reaction-count {
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .seo-section { 
+            text-align: left; margin-top: 80px; background: var(--card-bg); 
+            padding: 30px; border-radius: 20px; border: 1px solid var(--border); 
+            color: var(--text-muted); line-height: 1.6;
+        }
+        .loading { font-size: 1.2rem; color: var(--text-muted); padding: 40px; text-align: center; width: 100%; grid-column: 1/-1; }
+    </style>
+</head>
+<body>
+    
+    <div class="wrapper">
+        <div class="header">
+            <h1>US Streaming Countdown</h1>
+            <p>Track your favorite US shows and movies with real-time aesthetic timers.</p>
+        </div>
+
+        <div class="filter-container">
+            <button class="filter-btn active" onclick="filterPlatform('all', this)">All Shows</button>
+            <button class="filter-btn" onclick="filterPlatform('netflix', this)">Netflix</button>
+            <button class="filter-btn" onclick="filterPlatform('hbo', this)">HBO Max</button>
+            <button class="filter-btn" onclick="filterPlatform('hulu', this)">Hulu</button>
+            <button class="filter-btn" onclick="filterPlatform('prime', this)">Prime Video</button>
+        </div>
+
+        <div class="search-container">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="movieSearch" class="search-input" placeholder="Dhoondhiye apna favourite show..." onkeyup="liveSearch()">
+        </div>
+
+        <div class="section-title">🇺🇸 Upcoming Premieres</div>
+        <div class="grid" id="shows-grid">
+            <div class="loading">Fetching timers...</div>
+        </div>
+
+        <div class="section-title">🔥 Trending Now</div>
+        <div class="grid" id="trending-grid">
+            <div class="loading">Loading live US streaming charts...</div>
+        </div>
+
+        <div class="seo-section" id="seo-content"></div>
+    </div>
+
+    <script>
+        let currentPlatformFilter = 'all';
+
+        // Step 1: Filter logic
+        function filterPlatform(platform, btn) {
+            currentPlatformFilter = platform;
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            document.getElementById('movieSearch').value = ''; // Reset search on filter change
+            applyFilterAndSearch();
+        }
+
+        // Step 3: Live Search logic
+        function liveSearch() {
+            applyFilterAndSearch();
+        }
+
+        function applyFilterAndSearch() {
+            let searchInput = document.getElementById('movieSearch').value.toLowerCase();
+            let cards = document.querySelectorAll('#shows-grid .card');
+
+            cards.forEach(card => {
+                let title = card.querySelector('h2').innerText.toLowerCase();
+                let desc = card.querySelector('.show-desc') ? card.querySelector('.show-desc').innerText.toLowerCase() : "";
+                
+                let matchesFilter = (currentPlatformFilter === 'all' || card.classList.contains(currentPlatformFilter));
+                let matchesSearch = (title.includes(searchInput) || desc.includes(searchInput));
+
+                if (matchesFilter && matchesSearch) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        // Data Load fetch logic
+        fetch('shows.json?t=' + new Date().getTime())
+            .then(res => res.json())
+            .then(data => {
+                const getPlatformClass = (p) => {
+                    p = p ? p.toLowerCase() : '';
+                    if(p.includes('netflix')) return 'netflix';
+                    if(p.includes('hbo') || p.includes('max')) return 'hbo';
+                    if(p.includes('hulu')) return 'hulu';
+                    if(p.includes('prime') || p.includes('amazon')) return 'prime';
+                    if(p.includes('theater')) return 'theaters';
+                    return '';
+                };
+
+                // Render Shows + Posters + Reactions
+                const grid = document.getElementById('shows-grid');
+                grid.innerHTML = '';
+                const shows = data.upcoming_countdowns || data.shows || [];
+                
+                shows.forEach((show, index) => {
+                    const id = `s-${index}`;
+                    const pClass = getPlatformClass(show.platform);
+                    const card = document.createElement('div');
+                    card.className = `card ${pClass}`;
+                    
+                    const showKey = show.title.replace(/\s+/g, '-').toLowerCase();
+                    
+                    // Fallback Image agar JSON me image na ho
+                    const fallbackImg = "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=500&auto=format&fit=crop&q=60";
+                    const posterSrc = show.poster_url || fallbackImg;
+
+                    card.innerHTML = `
+                        <span class="badge">${show.platform}</span>
+                        <img class="card-poster" src="${posterSrc}" alt="${show.title} Poster" loading="lazy">
+                        <div class="card-body">
+                            <h2 style="margin:0; font-size:1.3rem; font-weight:700;">${show.title}</h2>
+                            <div class="timer">
+                                <div class="t-block"><span id="${id}-d">00</span><label>Days</label></div>
+                                <div class="t-block"><span id="${id}-h">00</span><label>Hrs</label></div>
+                                <div class="t-block"><span id="${id}-m">00</span><label>Min</label></div>
+                                <div class="t-block"><span id="${id}-s">00</span><label>Sec</label></div>
+                            </div>
+                            <p class="show-desc" style="font-size:0.85rem; color:var(--text-muted); margin:0 0 15px 0; line-height:1.4;">${show.description}</p>
+                            
+                            <div class="reaction-container">
+                                <button class="reaction-btn" onclick="handleReaction('${showKey}', 'fire', this)">
+                                    🔥 <span class="reaction-count" id="count-${showKey}-fire">0</span>
+                                </button>
+                                <button class="reaction-btn" onclick="handleReaction('${showKey}', 'heart', this)">
+                                    ❤️ <span class="reaction-count" id="count-${showKey}-heart">0</span>
+                                </button>
+                                <button class="reaction-btn" onclick="handleReaction('${showKey}', 'hype', this)">
+                                    😮 <span class="reaction-count" id="count-${showKey}-hype">0</span>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                    startTimer(show.countdown_date, id);
+                    loadReactions(showKey);
+                });
+
+                // Render Trending
+                const tGrid = document.getElementById('trending-grid');
+                if(data.now_trending && data.now_trending.length > 0) {
+                    tGrid.innerHTML = '';
+                    data.now_trending.forEach(item => {
+                        const card = document.createElement('div');
+                        card.className = `card ${getPlatformClass(item.platform)}`;
+                        card.innerHTML = `
+                            <div class="card-body">
+                                <span class="badge" style="position:static; display:inline-block; margin-bottom:10px;">${item.platform}</span>
+                                <h3 style="margin:0 0 10px 0; font-size:1.2rem;">${item.title}</h3>
+                                <p style="font-size:0.85rem; color:var(--text-muted); margin:0; line-height:1.4;">${item.trending_reason}</p>
+                            </div>`;
+                        tGrid.appendChild(card);
+                    });
+                } else {
+                    tGrid.innerHTML = '<div class="loading">Trending charts update scheduled tonight.</div>';
+                }
+
+                if(data.seo_text) document.getElementById('seo-content').innerHTML = `<h3>${data.seo_title}</h3><p>${data.seo_text}</p>`;
+
+            }).catch(err => {
+                document.getElementById('shows-grid').innerHTML = '<div class="loading">Failed to load timers.</div>';
+                document.getElementById('trending-grid').innerHTML = '<div class="loading">Failed to load charts.</div>';
+            });
+
+        // Live Countdown Timer Logic
+        function startTimer(date, id) {
+            const target = new Date(date).getTime();
+            setInterval(() => {
+                const diff = target - new Date().getTime();
+                if(diff < 0) return;
+                document.getElementById(id+'-d').innerText = Math.floor(diff/(1000*60*60*24));
+                document.getElementById(id+'-h').innerText = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+                document.getElementById(id+'-m').innerText = Math.floor((diff%(1000*60*60))/(1000*60));
+                document.getElementById(id+'-s').innerText = Math.floor((diff%(1000*60))/1000);
+            }, 1000);
+        }
+
+        // Step 2: Reaction Handle Logic
+        function handleReaction(showKey, type, btn) {
+            const storageKey = `react-${showKey}-${type}`;
+            let countId = `count-${showKey}-${type}`;
+            let currentCount = parseInt(localStorage.getItem(storageKey + '-count') || Math.floor(Math.random() * 50) + 10);
+
+            if (btn.classList.contains('active')) {
+                btn.classList.remove('active');
+                currentCount--;
+                localStorage.setItem(storageKey, 'false');
+            } else {
+                btn.classList.add('active');
+                currentCount++;
+                localStorage.setItem(storageKey, 'true');
+            }
+
+            localStorage.setItem(storageKey + '-count', currentCount);
+            document.getElementById(countId).innerText = currentCount;
+        }
+
+        // Step 2: Load Reactions on Fresh Page Load
+        function loadReactions(showKey) {
+            ['fire', 'heart', 'hype'].forEach(type => {
+                const storageKey = `react-${showKey}-${type}`;
+                let countId = `count-${showKey}-${type}`;
+                
+                if(!localStorage.getItem(storageKey + '-count')) {
+                    localStorage.setItem(storageKey + '-count', Math.floor(Math.random() * 80) + 15);
+                }
+                
+                let savedCount = localStorage.getItem(storageKey + '-count');
+                let isReacted = localStorage.getItem(storageKey) === 'true';
+
+                const countEl = document.getElementById(countId);
+                if(countEl) {
+                    countEl.innerText = savedCount;
+                    if(isReacted) {
+                        countEl.parentElement.classList.add('active');
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
