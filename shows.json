@@ -5,52 +5,52 @@
       "platform": "Theaters",
       "release_date_text": "June 19, 2026",
       "countdown_date": "June 19, 2026 00:00:00 EDT",
-      "poster_url": "[https://images.unsplash.com/photo-1608889174639-414d9fde9bf0?w=500&auto=format&fit=crop&q=60](https://images.unsplash.com/photo-1608889174639-414d9fde9bf0?w=500&auto=format&fit=crop&q=60)",
-      "description": "The toys are back in theaters! Track the official US release date countdown for Disney Pixar's next blockbuster installment."
+      "poster_url": "https://images.unsplash.com/photo-1608889174639-414d9fde9bf0?w=500",
+      "description": "Buzz and Woody return for a massive summer 2026 release."
     },
     {
-      "title": "House of the Dragon Season 3",
-      "platform": "HBO Max",
-      "release_date_text": "June 21, 2026",
-      "countdown_date": "June 21, 2026 21:00:00 EDT",
-      "poster_url": "[https://images.unsplash.com/photo-1618336753974-aae8e04506aa?w=500&auto=format&fit=crop&q=60](https://images.unsplash.com/photo-1618336753974-aae8e04506aa?w=500&auto=format&fit=crop&q=60)",
-      "description": "Track the live Eastern Standard Time countdown to the highly anticipated premiere of the Targaryen civil war on HBO."
+      "title": "Supergirl: Woman of Tomorrow",
+      "platform": "Theaters",
+      "release_date_text": "June 26, 2026",
+      "countdown_date": "June 26, 2026 00:00:00 EDT",
+      "poster_url": "https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?w=500",
+      "description": "The DC Universe expands with a high-stakes cosmic adventure."
     },
     {
-      "title": "The Bear Season 4",
-      "platform": "Hulu",
-      "release_date_text": "June 25, 2026",
-      "countdown_date": "June 25, 2026 00:01:00 EDT",
-      "poster_url": "[https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=500&auto=format&fit=crop&q=60](https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=500&auto=format&fit=crop&q=60)",
-      "description": "Get ready for the intense kitchen drama with our live countdown synchronized for official Hulu US streaming launch times."
+      "title": "Moana 2 Live-Action",
+      "platform": "Disney+",
+      "release_date_text": "July 10, 2026",
+      "countdown_date": "July 10, 2026 00:00:00 EDT",
+      "poster_url": "https://images.unsplash.com/photo-1559445383-a4d313125553?w=500",
+      "description": "A stunning reimagining of the ocean voyager's journey."
     }
   ],
   "now_trending": [
     {
       "platform": "Netflix US",
-      "title": "Stranger Things Season 5 Hype",
-      "rank": "#1 on Platform",
-      "trending_reason": "Massive streaming spikes and breaking social media trends in the US as official production teasers dominate entertainment feeds."
+      "title": "Stranger Things 5",
+      "rank": "#1",
+      "trending_reason": "Teasers are breaking the internet."
     },
     {
       "platform": "HBO Max",
-      "title": "The Last of Us Season 2",
-      "rank": "#1 on Platform",
-      "trending_reason": "Viewership records are breaking weekly across the United States as fans tune in for the intense live-action adaptation episodes."
+      "title": "The Last of Us 2",
+      "rank": "#1",
+      "trending_reason": "Massive viewership for the new season."
     },
     {
       "platform": "Hulu",
-      "title": "Shogun Season 2 Updates",
-      "rank": "#1 on Platform",
-      "trending_reason": "Binge-watching trends climb overnight as US audiences revisit the award-winning historical drama following major casting news."
+      "title": "The Bear Season 4",
+      "rank": "#1",
+      "trending_reason": "High-intensity kitchen drama returns."
     },
     {
-      "platform": "Prime Video US",
-      "title": "Fallout Season 2 Previews",
-      "rank": "#1 on Platform",
-      "trending_reason": "Dominating the charts as official streaming discussions and high-volume Google searches surge for Amazon's flagship sci-fi franchise."
+      "platform": "Prime Video",
+      "title": "Fallout Season 2",
+      "rank": "#1",
+      "trending_reason": "Streaming charts dominance continues."
     }
   ],
-  "seo_title": "US Streaming Charts: Top Trending Shows and Upcoming Movie Countdowns",
-  "seo_text": "Track what Americans are watching most right now across Netflix, HBO Max, Hulu, and Prime Video alongside real-time live countdown clocks for the biggest summer 2026 blockbusters."
+  "seo_title": "Top Trending Shows & Upcoming Countdowns",
+  "seo_text": "Real-time updates on what's trending in the USA."
 }
