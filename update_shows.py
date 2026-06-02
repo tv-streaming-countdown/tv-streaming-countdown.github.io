@@ -10,6 +10,17 @@ est_timezone = datetime.timezone(datetime.timedelta(hours=-4))
 us_current_time = datetime.datetime.now(est_timezone)
 today_date_us = us_current_time.strftime("%B %d, %Y")
 
+# Strict US Multi-Platform System Instruction for Google Discover & Accuracy
+system_instruction = (
+    "Act as a professional US Entertainment Journalist and SEO Expert. "
+    "Your core mission is to output factual, real-time data for Hollywood movies and TV shows. "
+    "STRICT POLICY:\n"
+    "1. VERIFICATION: Only use officially confirmed release dates from trusted US entertainment outlets (IMDb, Variety, Deadline, or official platform press releases).\n"
+    "2. NO HALLUCINATION: If an exact release date is unconfirmed or TBA, do not make up a date.\n"
+    "3. IMAGES FOR DISCOVER: You must provide high-quality, valid, public image URLs for show posters. Ensure they are clean, high-resolution, and optimized for Google Discover cards.\n"
+    "4. NO MARKDOWN: Output ONLY raw, valid JSON. Never wrap the output in ```json or any conversational text. Breakage of JSON syntax will crash the platform."
+)
+
 # Strict US Multi-Platform Trending + Upcoming Countdown Prompt
 prompt = (
     f"Today's date in the United States is {today_date_us}. Based on this live date, "
@@ -24,6 +35,7 @@ prompt = (
     "      \"platform\": \"Theaters / Netflix US / HBO Max / Hulu\",\n"
     "      \"release_date_text\": \"Month DD, 2026\",\n"
     "      \"countdown_date\": \"Month DD, 2026 00:00:00 EDT\",\n"
+    "      \"poster_url\": \"Provide a high-quality, valid, public image/poster URL for this show\",\n"
     "      \"description\": \"A catchy 2-sentence description loaded with high-volume US search keywords for Google Discover.\"\n"
     "    }\n"
     "  ],\n"
@@ -58,17 +70,19 @@ prompt = (
     "}"
 )
 
-url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={API_KEY}"
+url = f"[https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=](https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=){API_KEY}"
 headers = {'Content-Type': 'application/json'}
 
+# System Instruction ko payload ke andar sahi jagah set kiya hai
 payload = {
     "contents": [{"parts": [{"text": prompt}]}],
+    "systemInstruction": {"parts": [{"text": system_instruction}]},
     "generationConfig": {
         "responseMimeType": "application/json"
     }
 }
 
-# Fully updated 2026 Multi-Platform Backup Data
+# Fully updated 2026 Multi-Platform Backup Data with Poster URLs
 backup_data = {
   "upcoming_countdowns": [
     {
@@ -76,6 +90,7 @@ backup_data = {
       "platform": "Theaters",
       "release_date_text": "June 19, 2026",
       "countdown_date": "June 19, 2026 00:00:00 EDT",
+      "poster_url": "[https://images.unsplash.com/photo-1608889174639-414d9fde9bf0?w=500&auto=format&fit=crop&q=60](https://images.unsplash.com/photo-1608889174639-414d9fde9bf0?w=500&auto=format&fit=crop&q=60)",
       "description": "The toys are back in theaters! Track the official US release date countdown for Disney Pixar's next blockbuster installment."
     },
     {
@@ -83,6 +98,7 @@ backup_data = {
       "platform": "HBO Max",
       "release_date_text": "June 21, 2026",
       "countdown_date": "June 21, 2026 21:00:00 EDT",
+      "poster_url": "[https://images.unsplash.com/photo-1618336753974-aae8e04506aa?w=500&auto=format&fit=crop&q=60](https://images.unsplash.com/photo-1618336753974-aae8e04506aa?w=500&auto=format&fit=crop&q=60)",
       "description": "Track the live Eastern Standard Time countdown to the highly anticipated premiere of the Targaryen civil war on HBO."
     },
     {
@@ -90,6 +106,7 @@ backup_data = {
       "platform": "Hulu",
       "release_date_text": "June 25, 2026",
       "countdown_date": "June 25, 2026 00:01:00 EDT",
+      "poster_url": "[https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=500&auto=format&fit=crop&q=60](https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=500&auto=format&fit=crop&q=60)",
       "description": "Get ready for the intense kitchen drama with our live countdown synchronized for official Hulu US streaming launch times."
     }
   ],
