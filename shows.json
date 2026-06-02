@@ -2,55 +2,21 @@
   "upcoming_countdowns": [
     {
       "title": "Toy Story 5",
-      "platform": "Theaters",
+      "poster_url": "https://images.unsplash.com/photo-1608889174639-414d9fde9bf0?w=800",
       "release_date_text": "June 19, 2026",
-      "countdown_date": "June 19, 2026 00:00:00 EDT",
-      "poster_url": "https://images.unsplash.com/photo-1608889174639-414d9fde9bf0?w=500",
-      "description": "Buzz and Woody return for a massive summer 2026 release."
+      "countdown_date": "June 19, 2026 00:00:00 EDT"
     },
     {
-      "title": "Supergirl: Woman of Tomorrow",
-      "platform": "Theaters",
+      "title": "Supergirl",
+      "poster_url": "https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?w=800",
       "release_date_text": "June 26, 2026",
-      "countdown_date": "June 26, 2026 00:00:00 EDT",
-      "poster_url": "https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?w=500",
-      "description": "The DC Universe expands with a high-stakes cosmic adventure."
+      "countdown_date": "June 26, 2026 00:00:00 EDT"
     },
     {
-      "title": "Moana 2 Live-Action",
-      "platform": "Disney+",
+      "title": "Moana 2",
+      "poster_url": "https://images.unsplash.com/photo-1559445383-a4d313125553?w=800",
       "release_date_text": "July 10, 2026",
-      "countdown_date": "July 10, 2026 00:00:00 EDT",
-      "poster_url": "https://images.unsplash.com/photo-1559445383-a4d313125553?w=500",
-      "description": "A stunning reimagining of the ocean voyager's journey."
+      "countdown_date": "July 10, 2026 00:00:00 EDT"
     }
-  ],
-  "now_trending": [
-    {
-      "platform": "Netflix US",
-      "title": "Stranger Things 5",
-      "rank": "#1",
-      "trending_reason": "Teasers are breaking the internet."
-    },
-    {
-      "platform": "HBO Max",
-      "title": "The Last of Us 2",
-      "rank": "#1",
-      "trending_reason": "Massive viewership for the new season."
-    },
-    {
-      "platform": "Hulu",
-      "title": "The Bear Season 4",
-      "rank": "#1",
-      "trending_reason": "High-intensity kitchen drama returns."
-    },
-    {
-      "platform": "Prime Video",
-      "title": "Fallout Season 2",
-      "rank": "#1",
-      "trending_reason": "Streaming charts dominance continues."
-    }
-  ],
-  "seo_title": "Top Trending Shows & Upcoming Countdowns",
-  "seo_text": "Real-time updates on what's trending in the USA."
+  ]
 }
