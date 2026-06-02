@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- Google Discover / SEO Meta Tags (Photos only for Google) -->
     <title>Upcoming Hollywood Movies 2026 | US Streaming Charts</title>
     <meta name="description" content="Exclusive release dates and countdowns for the biggest Hollywood movies and web series coming in 2026.">
     <meta property="og:image" content="maxresdefault.webp">
@@ -13,13 +12,16 @@
 
     <style>
         :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
+            --bg-color: #0b0f19;
+            --card-bg: #131c2e;
             --text-main: #f8fafc;
-            --text-muted: #94a3b8;
+            --text-muted: #64748b;
             --accent: #38bdf8;
-            --accent-green: #22c55e;
-            --border: #334155;
+            --accent-glow: rgba(56, 189, 248, 0.4);
+            --timer-bg: #070a12;
+            --neon-green: #22c55e;
+            --neon-glow: rgba(34, 197, 94, 0.3);
+            --border: #1e293b;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -30,64 +32,124 @@
             line-height: 1.5;
         }
         .container { max-width: 1000px; margin: 0 auto; }
-        header { text-align: center; margin-bottom: 40px; padding: 20px 0; }
-        h1 { font-size: 2.2rem; color: var(--text-main); margin-bottom: 10px; font-weight: 800; }
-        p.seo-text { color: var(--text-muted); font-size: 1.1rem; max-width: 700px; margin: 0 auto; }
+        header { text-align: center; margin-bottom: 40px; padding: 30px 0; }
+        h1 { font-size: 2.4rem; color: var(--text-main); margin-bottom: 12px; font-weight: 800; letter-spacing: -0.5px; }
+        p.seo-text { color: #94a3b8; font-size: 1.1rem; max-width: 700px; margin: 0 auto; }
         
         section { margin-bottom: 40px; }
-        h2 { font-size: 1.4rem; margin-bottom: 20px; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+        h2 { font-size: 1.3rem; margin-bottom: 25px; color: var(--accent); text-transform: uppercase; letter-spacing: 1.5px; border-bottom: 2px solid var(--border); padding-bottom: 10px; }
         
-        /* Grid Layouts */
-        .grid-countdown { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
-        
-        /* Hidden Class for Discover Images */
+        .grid-countdown { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
         .discover-only-img { display: none !important; }
 
-        /* Cards styling - No Images */
+        /* Premium Card Design */
         .card { 
             background: var(--card-bg); 
-            border-radius: 12px; 
+            border-radius: 16px; 
             border: 1px solid var(--border); 
-            padding: 24px;
-            transition: 0.3s;
+            padding: 26px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 10px 30px -15px rgba(0,0,0,0.5);
         }
-        .card:hover { border-color: var(--accent); transform: translateY(-3px); }
+        .card:hover { 
+            border-color: var(--accent); 
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px -10px var(--accent-glow);
+        }
         
         .platform-tag { 
             display: inline-block;
-            background: rgba(56, 189, 248, 0.1); 
+            align-self: flex-start;
+            background: rgba(56, 189, 248, 0.08); 
             color: var(--accent); 
-            padding: 4px 12px; 
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            padding: 4px 14px; 
             font-size: 0.7rem; 
             font-weight: 800; 
-            border-radius: 4px; 
-            margin-bottom: 12px;
+            border-radius: 6px; 
+            margin-bottom: 16px;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         
-        .card-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 10px; color: #fff; }
-        .card-desc { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px; }
+        .card-title { font-size: 1.45rem; font-weight: 800; margin-bottom: 10px; color: #fff; letter-spacing: -0.3px; }
+        .card-desc { color: #94a3b8; font-size: 0.95rem; margin-bottom: 24px; flex-grow: 1; line-height: 1.6; }
         
-        /* Countdown Timer */
-        .timer-box { 
-            background: rgba(15, 23, 42, 0.5); 
-            border-radius: 8px; 
-            padding: 15px; 
-            text-align: center; 
-            border: 1px dashed var(--border);
+        /* 🚀 PREMIUM DIGITAL CLOCK SYSTEM */
+        .premium-timer {
+            background: var(--timer-bg);
+            border-radius: 12px;
+            padding: 16px 10px;
+            border: 1px solid #1e293b;
+            margin-bottom: 22px;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.8);
         }
-        .timer-display { font-family: monospace; font-size: 1.5rem; font-weight: bold; color: var(--accent-green); }
-        .release-label { font-size: 0.8rem; color: var(--text-muted); margin-top: 5px; }
+        .clock-digits-wrapper {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+        .time-segment {
+            text-align: center;
+            min-width: 55px;
+        }
+        .time-number {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--neon-green);
+            text-shadow: 0 0 12px var(--neon-glow);
+            background: rgba(34, 197, 94, 0.05);
+            padding: 4px 0;
+            border-radius: 6px;
+            border: 1px solid rgba(34, 197, 94, 0.1);
+            display: block;
+        }
+        .time-label {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-top: 6px;
+            letter-spacing: 0.5px;
+        }
+        .clock-colon {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: rgba(34, 197, 94, 0.4);
+            align-self: center;
+            margin-top: -18px;
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+        .release-label { 
+            font-size: 0.75rem; 
+            color: #64748b; 
+            text-align: center;
+            margin-top: 12px;
+            font-weight: 500;
+        }
+
+        /* Reactions Layout */
+        .reaction-container { display: flex; gap: 10px; padding-top: 18px; border-top: 1px solid var(--border); }
+        .reaction-btn { background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border); color: #94a3b8; padding: 7px 14px; border-radius: 20px; font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all 0.2s ease; }
+        .reaction-btn:hover { background: rgba(255, 255, 255, 0.07); color: #fff; border-color: #475569; }
+        .reaction-btn.active { background: rgba(56, 189, 248, 0.15); border-color: var(--accent); color: #fff; text-shadow: 0 0 8px rgba(56, 189, 248, 0.5); }
+        .reaction-count { font-weight: 700; font-size: 0.8rem; }
 
         @media (max-width: 600px) {
-            h1 { font-size: 1.8rem; }
-            .timer-display { font-size: 1.2rem; }
+            h1 { font-size: 1.9rem; }
+            .time-number { font-size: 1.4rem; min-width: 45px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Hidden images for Google Discover to crawl -->
     <img src="maxresdefault.webp" class="discover-only-img" alt="Hollywood Upcoming Movies 2026">
     <img src="hbo-discover.webp" class="discover-only-img" alt="US Series Streaming Charts 2026">
 
@@ -100,23 +162,27 @@
         <section>
             <h2>US Premieres & Trackers</h2>
             <div class="grid-countdown" id="countdown-container">
-                <!-- Data populated by JavaScript -->
-            </div>
+                </div>
         </section>
     </div>
 
     <script>
-        function startTimer(targetDateStr, elementId) {
+        function startTimer(targetDateStr, index) {
             function updateClock() {
                 const target = new Date(targetDateStr).getTime();
                 const now = new Date().getTime();
                 const diff = target - now;
-                const el = document.getElementById(elementId);
-                if (!el) return;
+
+                const dEl = document.getElementById(`d-${index}`);
+                const hEl = document.getElementById(`h-${index}`);
+                const mEl = document.getElementById(`m-${index}`);
+                const sEl = document.getElementById(`s-${index}`);
+                const wrapper = document.getElementById(`wrapper-${index}`);
+
+                if (!dEl) return;
 
                 if (diff <= 0) {
-                    el.innerHTML = "AVAILABLE NOW";
-                    el.style.color = "#22c55e";
+                    wrapper.innerHTML = `<div style="color: var(--neon-green); font-weight:900; font-family:monospace; font-size:1.4rem; text-shadow: 0 0 10px var(--neon-glow); letter-spacing:1px;">⚡ AVAILABLE NOW STREAMING</div>`;
                     return;
                 }
 
@@ -125,10 +191,41 @@
                 const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
                 const s = Math.floor((diff % (1000 * 60)) / 1000);
 
-                el.innerHTML = `${d}d ${h}h ${m}m ${s}s`;
+                // Pad numbers with leading zeros for premium digital display look
+                dEl.innerText = d < 10 ? '0' + d : d;
+                hEl.innerText = h < 10 ? '0' + h : h;
+                mEl.innerText = m < 10 ? '0' + m : m;
+                sEl.innerText = s < 10 ? '0' + s : s;
             }
             updateClock();
             setInterval(updateClock, 1000);
+        }
+
+        function handleReaction(showKey, type, btn) {
+            const storageKey = `react-${showKey}-${type}`;
+            let countId = `count-${showKey}-${type}`;
+            let currentCount = parseInt(localStorage.getItem(storageKey + '-count') || Math.floor(Math.random() * 40) + 10);
+
+            if (btn.classList.contains('active')) {
+                btn.classList.remove('active');
+                currentCount--;
+                localStorage.setItem(storageKey, 'false');
+            } else {
+                btn.classList.add('active');
+                currentCount++;
+                localStorage.setItem(storageKey, 'true');
+            }
+
+            localStorage.setItem(storageKey + '-count', currentCount);
+            document.getElementById(countId).innerText = currentCount;
+        }
+
+        function initReactions(showKey, type) {
+            const storageKey = `react-${showKey}-${type}`;
+            if (!localStorage.getItem(storageKey + '-count')) {
+                localStorage.setItem(storageKey + '-count', Math.floor(Math.random() * 60) + 15);
+            }
+            return localStorage.getItem(storageKey + '-count');
         }
 
         async function loadData() {
@@ -140,19 +237,49 @@
                 container.innerHTML = '';
                 
                 data.upcoming_countdowns.forEach((item, i) => {
-                    const tId = `clock-${i}`;
+                    const showKey = item.title.replace(/\s+/g, '-').toLowerCase();
+                    
+                    const fireCount = initReactions(showKey, 'fire');
+                    const heartCount = initReactions(showKey, 'heart');
+                    const hypeCount = initReactions(showKey, 'hype');
+
+                    const isFire = localStorage.getItem(`react-${showKey}-fire`) === 'true' ? 'active' : '';
+                    const isHeart = localStorage.getItem(`react-${showKey}-heart`) === 'true' ? 'active' : '';
+                    const isHype = localStorage.getItem(`react-${showKey}-hype`) === 'true' ? 'active' : '';
+
                     container.innerHTML += `
                         <div class="card">
                             <span class="platform-tag">${item.platform}</span>
                             <h3 class="card-title">${item.title}</h3>
                             <p class="card-desc">${item.description}</p>
-                            <div class="timer-box">
-                                <div class="timer-display" id="${tId}">00d 00h 00m 00s</div>
-                                <div class="release-label">Official Launch: ${item.release_date_text}</div>
+                            
+                            <div class="premium-timer">
+                                <div class="clock-digits-wrapper" id="wrapper-${i}">
+                                    <div class="time-segment"><span class="time-number" id="d-${i}">00</span><div class="time-label">Days</div></div>
+                                    <div class="clock-colon">:</div>
+                                    <div class="time-segment"><span class="time-number" id="h-${i}">00</span><div class="time-label">Hours</div></div>
+                                    <div class="clock-colon">:</div>
+                                    <div class="time-segment"><span class="time-number" id="m-${i}">00</span><div class="time-label">Mins</div></div>
+                                    <div class="clock-colon">:</div>
+                                    <div class="time-segment"><span class="time-number" id="s-${i}">00</span><div class="time-label">Secs</div></div>
+                                </div>
+                                <div class="release-label">Target Release: ${item.release_date_text}</div>
+                            </div>
+
+                            <div class="reaction-container">
+                                <button class="reaction-btn ${isFire}" onclick="handleReaction('${showKey}', 'fire', this)">
+                                    🔥 <span class="reaction-count" id="count-${showKey}-fire">${fireCount}</span>
+                                </button>
+                                <button class="reaction-btn ${isHeart}" onclick="handleReaction('${showKey}', 'heart', this)">
+                                    ❤️ <span class="reaction-count" id="count-${showKey}-heart">${heartCount}</span>
+                                </button>
+                                <button class="reaction-btn ${isHype}" onclick="handleReaction('${showKey}', 'hype', this)">
+                                    😮 <span class="reaction-count" id="count-${showKey}-hype">${hypeCount}</span>
+                                </button>
                             </div>
                         </div>
                     `;
-                    setTimeout(() => startTimer(item.countdown_date, tId), 50);
+                    setTimeout(() => startTimer(item.countdown_date, i), 50);
                 });
             } catch (e) {
                 document.getElementById('seo-title').innerText = "Syncing Hollywood Data...";
