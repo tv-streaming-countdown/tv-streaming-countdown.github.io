@@ -5,21 +5,24 @@
       "platform": "Theaters",
       "release_date_text": "June 19, 2026",
       "countdown_date": "June 19, 2026 00:00:00 EDT",
-      "description": "The toys are back in theaters! Track the official US release date countdown for Disney Pixar's next blockbuster installment."
+      "poster_url": "https://images.unsplash.com/photo-1608889174639-414d9fde9bf0?w=500&auto=format&fit=crop&q=60",
+      "description": "The iconic toys return to the big screen! Track the official live US release date countdown for Disney Pixar's highly anticipated animation blockbuster."
     },
     {
       "title": "House of the Dragon Season 3",
       "platform": "HBO Max",
       "release_date_text": "June 21, 2026",
       "countdown_date": "June 21, 2026 21:00:00 EDT",
-      "description": "Track the live Eastern Standard Time countdown to the highly anticipated premiere of the Targaryen civil war on HBO."
+      "poster_url": "https://images.unsplash.com/photo-1618336753974-aae8e04506aa?w=500&auto=format&fit=crop&q=60",
+      "description": "The Targaryen civil war reaches a boiling point. Track the real-time live countdown synchronized with official HBO Max US streaming premiere times."
     },
     {
       "title": "The Bear Season 4",
       "platform": "Hulu",
       "release_date_text": "June 25, 2026",
       "countdown_date": "June 25, 2026 00:01:00 EDT",
-      "description": "Get ready for the intense kitchen drama with our live countdown synchronized for official Hulu US streaming launch times."
+      "poster_url": "https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=500&auto=format&fit=crop&q=60",
+      "description": "Get ready for the chaos and high stakes in the kitchen. Monitor the precise countdown clock leading up to the official Hulu US release."
     }
   ],
   "now_trending": [
