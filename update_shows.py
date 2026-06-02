@@ -35,7 +35,7 @@ prompt = (
     "      \"platform\": \"Theaters / Netflix US / HBO Max / Hulu\",\n"
     "      \"release_date_text\": \"Month DD, 2026\",\n"
     "      \"countdown_date\": \"Month DD, 2026 00:00:00 EDT\",\n"
-    "      \"poster_url\": \"Provide a high-quality, valid, public image/poster URL for this show\",\n"
+    "      \"poster_url\": \"Provide a high-quality, valid, public image/poster URL for this show. Strictly output raw text URL, do not add markdown brackets like [] or ()\",\n"
     "      \"description\": \"A catchy 2-sentence description loaded with high-volume US search keywords for Google Discover.\"\n"
     "    }\n"
     "  ],\n"
@@ -73,7 +73,6 @@ prompt = (
 url = f"[https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=](https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=){API_KEY}"
 headers = {'Content-Type': 'application/json'}
 
-# System Instruction ko payload ke andar sahi jagah set kiya hai
 payload = {
     "contents": [{"parts": [{"text": prompt}]}],
     "systemInstruction": {"parts": [{"text": system_instruction}]},
@@ -82,7 +81,7 @@ payload = {
     }
 }
 
-# Fully updated 2026 Multi-Platform Backup Data with Poster URLs
+# Clean Backup Data without markdown links
 backup_data = {
   "upcoming_countdowns": [
     {
