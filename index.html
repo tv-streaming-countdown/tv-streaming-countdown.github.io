@@ -1,1 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>US Streaming Charts & Movie Countdowns</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #38bdf8;
+            --accent-green: #22c55e;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            padding: 20px;
+            line-height: 1.5;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        header { text-align: center; margin-bottom: 40px; padding: 20px 0; }
+        h1 { font-size: 2.2rem; color: var(--text-main); margin-bottom: 10px; font-weight: 800; }
+        p.seo-text { color: var(--text-muted); font-size: 1.1rem; max-width: 700px; margin: 0 auto; }
+        
+        section { margin-bottom: 50px; }
+        h2 { font-size: 1.6rem; margin-bottom: 20px; border-left: 4px solid var(--accent); padding-left: 10px; color: var(--accent); }
+        
+        /* Grid Layouts */
+        .grid-countdown { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+        .grid-trending { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+        
+        /* Cards styling */
+        .card { background: var(--card-bg); border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border: 1px solid #334155; display: flex; flex-direction: column; }
+        .poster-area { width: 100%; height: 220px; background: #0f172a; position: relative; overflow: hidden; }
+        .poster-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+        .card:hover .poster-img { transform: scale(1.05); }
+        .platform-badge { position: absolute; top: 12px; left: 12px; background: rgba(15,23,42,0.85); color: var(--accent); padding: 4px 10px; font-size: 0.75rem; font-weight: 700; border-radius: 6px; backdrop-filter: blur(4px); border: 1px solid #475569; }
+        
+        .card-body { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .card-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 8px; color: var(--text-main); }
+        .card-desc { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px; }
+        
+        /* Countdown Timer Clock */
+        .timer-box { background: #0f172a; border-radius: 8px; padding: 12px; text-align: center; border: 1px solid #334155; margin-top: auto; }
+        .timer-display { font-family: monospace; font-size: 1.2rem; font-weight: bold; color: var(--accent-green); letter-spacing: 1px; }
+        .release-date { font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; }
+        
+        /* Trending List Specific */
+        .trending-card { padding: 20px; position: relative; }
+        .rank-badge { color: var(--accent-green); font-weight: 800; font-size: 0.9rem; margin-bottom: 5px; text-transform: uppercase; }
+        .trending-reason { color: var(--text-muted); font-size: 0.9rem; margin-top: 8px; }
 
+        @media (max-width: 600px) {
+            h1 { font-size: 1.75rem; }
+            body { padding: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1 id="seo-title">Loading Streaming Charts...</h1>
+            <p class="seo-text" id="seo-text">Fetching latest US entertainment schedules and daily tracking filters.</p>
+        </header>
+
+        <!-- Section 1: Countdowns -->
+        <section>
+            <h2>Upcoming US Blockbusters & Series</h2>
+            <div class="grid-countdown" id="countdown-container">
+                <!-- Data dynamically inserted here -->
+            </div>
+        </section>
+
+        <!-- Section 2: Trending -->
+        <section>
+            <h2>Currently Dominating US Views</h2>
+            <div class="grid-trending" id="trending-container">
+                <!-- Data dynamically inserted here -->
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Automatic Dynamic Countdown Core Logic
+        function startTimer(targetDateStr, elementId) {
+            function updateClock() {
+                const target = new Date(targetDateStr).getTime();
+                const now = new Date().getTime();
+                const difference = target - now;
+
+                const el = document.getElementById(elementId);
+                if (!el) return;
+
+                if (difference <= 0) {
+                    el.innerHTML = "NOW LIVE & STREAMING";
+                    el.style.color = "#22c55e";
+                    return;
+                }
+
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+                el.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            }
+            updateClock();
+            setInterval(updateClock, 1000);
+        }
+
+        // Fetch and Populate JSON System
+        async function loadDashboardData() {
+            try {
+                // Fetching via timestamp to prevent aggressive browser caching
+                const response = await fetch('shows.json?t=' + new Date().getTime());
+                if (!response.ok) throw new Error("JSON payload grid missing");
+                
+                const data = await response.json();
+
+                // Set SEO Headers
+                document.getElementById('seo-title').innerText = data.seo_title || "US Streaming Charts";
+                document.getElementById('seo-text').innerText = data.seo_text || "";
+
+                // Populate Section 1: Countdowns
+                const countdownContainer = document.getElementById('countdown-container');
+                countdownContainer.innerHTML = '';
+                
+                data.upcoming_countdowns.forEach((item, index) => {
+                    const timerId = `timer-clock-${index}`;
+                    const cardHtml = `
+                        <div class="card">
+                            <div class="poster-area">
+                                <span class="platform-badge">${item.platform}</span>
+                                <img class="poster-img" src="${item.poster_url}" alt="${item.title} Poster" onerror="this.src='https://images.unsplash.com/photo-1485846234645-a62644f84728?w=500'">
+                            </div>
+                            <div class="card-body">
+                                <div>
+                                    <h3 class="card-title">${item.title}</h3>
+                                    <p class="card-desc">${item.description}</p>
+                                </div>
+                                <div class="timer-box">
+                                    <div class="timer-display" id="${timerId}">00d 00h 00m 00s</div>
+                                    <div class="release-date">Releasing: ${item.release_date_text}</div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    countdownContainer.innerHTML += cardHtml;
+                    setTimeout(() => startTimer(item.countdown_date, timerId), 50);
+                });
+
+                // Populate Section 2: Trending
+                const trendingContainer = document.getElementById('trending-container');
+                trendingContainer.innerHTML = '';
+
+                data.now_trending.forEach(item => {
+                    const trendHtml = `
+                        <div class="card trending-card">
+                            <span class="platform-badge" style="position:static; display:inline-block; margin-bottom:10px;">${item.platform}</span>
+                            <div class="rank-badge">${item.rank}</div>
+                            <h3 class="card-title" style="font-size:1.15rem;">${item.title}</h3>
+                            <p class="trending-reason">${item.trending_reason}</p>
+                        </div>
+                    `;
+                    trendingContainer.innerHTML += trendHtml;
+                });
+
+            } catch (error) {
+                console.error("Dashboard engine crashed:", error);
+                document.getElementById('seo-title').innerText = "Syncing Secure Live Data Clocks...";
+            }
+        }
+
+        window.onload = loadDashboardData;
+    </script>
+</body>
+</html>
