@@ -3,7 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>US Streaming Charts & Movie Countdowns</title>
+    
+    <!-- Google Discover / SEO Meta Tags (Photos only for Google) -->
+    <title>Upcoming Hollywood Movies 2026 | US Streaming Charts</title>
+    <meta name="description" content="Exclusive release dates and countdowns for the biggest Hollywood movies and web series coming in 2026.">
+    <meta property="og:image" content="maxresdefault.webp">
+    <meta property="og:image:secure_url" content="hbo-discover.webp">
+    <meta property="og:type" content="website">
+
     <style>
         :root {
             --bg-color: #0f172a;
@@ -22,215 +29,136 @@
             padding: 20px;
             line-height: 1.5;
         }
-        .container { max-width: 1200px; margin: 0 auto; }
+        .container { max-width: 1000px; margin: 0 auto; }
         header { text-align: center; margin-bottom: 40px; padding: 20px 0; }
         h1 { font-size: 2.2rem; color: var(--text-main); margin-bottom: 10px; font-weight: 800; }
         p.seo-text { color: var(--text-muted); font-size: 1.1rem; max-width: 700px; margin: 0 auto; }
         
-        section { margin-bottom: 50px; }
-        h2 { font-size: 1.6rem; margin-bottom: 20px; border-left: 4px solid var(--accent); padding-left: 10px; color: var(--accent); }
+        section { margin-bottom: 40px; }
+        h2 { font-size: 1.4rem; margin-bottom: 20px; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
         
         /* Grid Layouts */
-        .grid-countdown { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
-        .grid-trending { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+        .grid-countdown { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
         
-        /* Cards styling */
-        .card { background: var(--card-bg); border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border: 1px solid var(--border); display: flex; flex-direction: column; }
-        .poster-area { width: 100%; height: 220px; background: #0f172a; position: relative; overflow: hidden; }
-        .poster-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
-        .card:hover .poster-img { transform: scale(1.05); }
-        .platform-badge { position: absolute; top: 12px; left: 12px; background: rgba(15,23,42,0.85); color: var(--accent); padding: 4px 10px; font-size: 0.75rem; font-weight: 700; border-radius: 6px; backdrop-filter: blur(4px); border: 1px solid #475569; }
-        
-        .card-body { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
-        .card-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 8px; color: var(--text-main); }
-        .card-desc { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px; flex-grow: 1; }
-        
-        /* Countdown Timer Clock */
-        .timer-box { background: #0f172a; border-radius: 8px; padding: 12px; text-align: center; border: 1px solid var(--border); margin-bottom: 15px; }
-        .timer-display { font-family: monospace; font-size: 1.2rem; font-weight: bold; color: var(--accent-green); letter-spacing: 1px; }
-        .release-date { font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; }
-        
-        /* Reaction System Style */
-        .reaction-container { display: flex; gap: 10px; padding-top: 12px; border-top: 1px solid var(--border); }
-        .reaction-btn { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border); color: var(--text-muted); padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all 0.2s ease; }
-        .reaction-btn:hover { background: rgba(255, 255, 255, 0.1); color: #fff; }
-        .reaction-btn.active { background: rgba(56, 189, 248, 0.2); border-color: var(--accent); color: #fff; }
-        .reaction-count { font-weight: 700; font-size: 0.8rem; }
+        /* Hidden Class for Discover Images */
+        .discover-only-img { display: none !important; }
 
-        /* Trending List Specific */
-        .trending-card { border-top: 4px solid var(--accent); transition: 0.3s; }
-        .trending-card:hover { transform: translateY(-5px); border-color: var(--accent-green); }
-        .rank-badge { color: var(--accent-green); font-weight: 800; font-size: 0.9rem; margin-bottom: 5px; text-transform: uppercase; }
-        .trending-reason { color: var(--text-muted); font-size: 0.95rem; margin-top: 10px; line-height: 1.4; display: block !important; }
+        /* Cards styling - No Images */
+        .card { 
+            background: var(--card-bg); 
+            border-radius: 12px; 
+            border: 1px solid var(--border); 
+            padding: 24px;
+            transition: 0.3s;
+        }
+        .card:hover { border-color: var(--accent); transform: translateY(-3px); }
+        
+        .platform-tag { 
+            display: inline-block;
+            background: rgba(56, 189, 248, 0.1); 
+            color: var(--accent); 
+            padding: 4px 12px; 
+            font-size: 0.7rem; 
+            font-weight: 800; 
+            border-radius: 4px; 
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+        
+        .card-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 10px; color: #fff; }
+        .card-desc { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px; }
+        
+        /* Countdown Timer */
+        .timer-box { 
+            background: rgba(15, 23, 42, 0.5); 
+            border-radius: 8px; 
+            padding: 15px; 
+            text-align: center; 
+            border: 1px dashed var(--border);
+        }
+        .timer-display { font-family: monospace; font-size: 1.5rem; font-weight: bold; color: var(--accent-green); }
+        .release-label { font-size: 0.8rem; color: var(--text-muted); margin-top: 5px; }
 
         @media (max-width: 600px) {
-            h1 { font-size: 1.75rem; }
-            body { padding: 12px; }
+            h1 { font-size: 1.8rem; }
+            .timer-display { font-size: 1.2rem; }
         }
     </style>
 </head>
 <body>
 
+    <!-- Hidden images for Google Discover to crawl -->
+    <img src="maxresdefault.webp" class="discover-only-img" alt="Hollywood Upcoming Movies 2026">
+    <img src="hbo-discover.webp" class="discover-only-img" alt="US Series Streaming Charts 2026">
+
     <div class="container">
         <header>
-            <h1 id="seo-title">Loading Streaming Charts...</h1>
-            <p class="seo-text" id="seo-text">Fetching latest US entertainment schedules and daily tracking filters.</p>
+            <h1 id="seo-title">Hollywood Movie Countdown 2026</h1>
+            <p class="seo-text" id="seo-text">Daily updated schedules for US streaming and theater releases.</p>
         </header>
 
         <section>
-            <h2>Upcoming US Blockbusters & Series</h2>
+            <h2>US Premieres & Trackers</h2>
             <div class="grid-countdown" id="countdown-container">
-                </div>
-        </section>
-
-        <section>
-            <h2>Currently Dominating US Views</h2>
-            <div class="grid-trending" id="trending-container">
-                </div>
+                <!-- Data populated by JavaScript -->
+            </div>
         </section>
     </div>
 
     <script>
-        // Real-time Countdown Core Logic
         function startTimer(targetDateStr, elementId) {
             function updateClock() {
                 const target = new Date(targetDateStr).getTime();
                 const now = new Date().getTime();
-                const difference = target - now;
-
+                const diff = target - now;
                 const el = document.getElementById(elementId);
                 if (!el) return;
 
-                if (difference <= 0) {
-                    el.innerHTML = "NOW LIVE & STREAMING";
+                if (diff <= 0) {
+                    el.innerHTML = "AVAILABLE NOW";
                     el.style.color = "#22c55e";
                     return;
                 }
 
-                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const s = Math.floor((diff % (1000 * 60)) / 1000);
 
-                el.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+                el.innerHTML = `${d}d ${h}h ${m}m ${s}s`;
             }
             updateClock();
             setInterval(updateClock, 1000);
         }
 
-        // Reaction Handler System (Local Storage Based)
-        function handleReaction(showKey, type, btn) {
-            const storageKey = `react-${showKey}-${type}`;
-            let countId = `count-${showKey}-${type}`;
-            let currentCount = parseInt(localStorage.getItem(storageKey + '-count') || Math.floor(Math.random() * 40) + 10);
-
-            if (btn.classList.contains('active')) {
-                btn.classList.remove('active');
-                currentCount--;
-                localStorage.setItem(storageKey, 'false');
-            } else {
-                btn.classList.add('active');
-                currentCount++;
-                localStorage.setItem(storageKey, 'true');
-            }
-
-            localStorage.setItem(storageKey + '-count', currentCount);
-            document.getElementById(countId).innerText = currentCount;
-        }
-
-        // Initialize Reaction Counters
-        function initReactions(showKey, type) {
-            const storageKey = `react-${showKey}-${type}`;
-            if (!localStorage.getItem(storageKey + '-count')) {
-                localStorage.setItem(storageKey + '-count', Math.floor(Math.random() * 60) + 15);
-            }
-            return localStorage.getItem(storageKey + '-count');
-        }
-
-        // Fetch and Populate JSON System
-        async function loadDashboardData() {
+        async function loadData() {
             try {
-                const response = await fetch('shows.json?t=' + new Date().getTime());
-                if (!response.ok) throw new Error("JSON payload grid missing");
+                const res = await fetch('shows.json?t=' + Date.now());
+                const data = await res.json();
+
+                const container = document.getElementById('countdown-container');
+                container.innerHTML = '';
                 
-                const data = await response.json();
-
-                // Set SEO Headers
-                document.getElementById('seo-title').innerText = data.seo_title || "US Streaming Charts";
-                document.getElementById('seo-text').innerText = data.seo_text || "";
-
-                // Populate Section 1: Countdowns
-                const countdownContainer = document.getElementById('countdown-container');
-                countdownContainer.innerHTML = '';
-                
-                data.upcoming_countdowns.forEach((item, index) => {
-                    const timerId = `timer-clock-${index}`;
-                    const showKey = item.title.replace(/\s+/g, '-').toLowerCase();
-                    
-                    const fireCount = initReactions(showKey, 'fire');
-                    const heartCount = initReactions(showKey, 'heart');
-                    const hypeCount = initReactions(showKey, 'hype');
-
-                    const isFire = localStorage.getItem(`react-${showKey}-fire`) === 'true' ? 'active' : '';
-                    const isHeart = localStorage.getItem(`react-${showKey}-heart`) === 'true' ? 'active' : '';
-                    const isHype = localStorage.getItem(`react-${showKey}-hype`) === 'true' ? 'active' : '';
-
-                    const cardHtml = `
+                data.upcoming_countdowns.forEach((item, i) => {
+                    const tId = `clock-${i}`;
+                    container.innerHTML += `
                         <div class="card">
-                            <div class="poster-area">
-                                <span class="platform-badge">${item.platform}</span>
-                                <img class="poster-img" src="${item.poster_url}" alt="${item.title} Poster" onerror="this.src='https://images.unsplash.com/photo-1485846234645-a62644f84728?w=500'">
-                            </div>
-                            <div class="card-body">
-                                <h3 class="card-title">${item.title}</h3>
-                                <p class="card-desc">${item.description}</p>
-                                <div class="timer-box">
-                                    <div class="timer-display" id="${timerId}">00d 00h 00m 00s</div>
-                                    <div class="release-date">Releasing: ${item.release_date_text}</div>
-                                </div>
-                                <div class="reaction-container">
-                                    <button class="reaction-btn ${isFire}" onclick="handleReaction('${showKey}', 'fire', this)">
-                                        🔥 <span class="reaction-count" id="count-${showKey}-fire">${fireCount}</span>
-                                    </button>
-                                    <button class="reaction-btn ${isHeart}" onclick="handleReaction('${showKey}', 'heart', this)">
-                                        ❤️ <span class="reaction-count" id="count-${showKey}-heart">${heartCount}</span>
-                                    </button>
-                                    <button class="reaction-btn ${isHype}" onclick="handleReaction('${showKey}', 'hype', this)">
-                                        😮 <span class="reaction-count" id="count-${showKey}-hype">${hypeCount}</span>
-                                    </button>
-                                </div>
+                            <span class="platform-tag">${item.platform}</span>
+                            <h3 class="card-title">${item.title}</h3>
+                            <p class="card-desc">${item.description}</p>
+                            <div class="timer-box">
+                                <div class="timer-display" id="${tId}">00d 00h 00m 00s</div>
+                                <div class="release-label">Official Launch: ${item.release_date_text}</div>
                             </div>
                         </div>
                     `;
-                    countdownContainer.innerHTML += cardHtml;
-                    setTimeout(() => startTimer(item.countdown_date, timerId), 50);
+                    setTimeout(() => startTimer(item.countdown_date, tId), 50);
                 });
-
-                // Populate Section 2: Trending
-                const trendingContainer = document.getElementById('trending-container');
-                trendingContainer.innerHTML = '';
-
-                data.now_trending.forEach(item => {
-                    const trendHtml = `
-                        <div class="card trending-card">
-                            <div style="padding:20px;">
-                                <span class="platform-badge" style="position:static; display:inline-block; margin-bottom:10px;">${item.platform}</span>
-                                <div class="rank-badge">${item.rank} ✨</div>
-                                <h3 class="card-title" style="font-size:1.15rem; color:var(--accent);">${item.title}</h3>
-                                <p class="trending-reason">${item.trending_reason}</p>
-                            </div>
-                        </div>
-                    `;
-                    trendingContainer.innerHTML += trendHtml;
-                });
-
-            } catch (error) {
-                console.error("Dashboard engine crashed:", error);
-                document.getElementById('seo-title').innerText = "Syncing Live Data Clocks...";
+            } catch (e) {
+                document.getElementById('seo-title').innerText = "Syncing Hollywood Data...";
             }
         }
-
-        window.onload = loadDashboardData;
+        window.onload = loadData;
     </script>
 </body>
 </html>
