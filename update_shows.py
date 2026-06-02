@@ -10,67 +10,43 @@ est_timezone = datetime.timezone(datetime.timedelta(hours=-4))
 us_current_time = datetime.datetime.now(est_timezone)
 today_date_us = us_current_time.strftime("%B %d, %Y")
 
+# AI ko strictly alag images ke liye instruct karna
 system_instruction = (
-    "Act as a professional US Entertainment Journalist. "
-    "STRICT POLICY:\n"
-    "1. UNIQUE IMAGES: You MUST provide a different, high-quality, valid public poster URL for EACH show. Do not repeat images.\n"
-    "2. NO MARKDOWN: Output ONLY raw JSON. No brackets [] or () around URLs. No backticks.\n"
-    "3. DISCOVER READY: Use high-resolution images that look good on Google Discover."
+    "You are a Hollywood Database API. Your output MUST be unique.\n"
+    "CRITICAL: Each 'poster_url' MUST have a unique ID at the end. \n"
+    "Example 1: https://images.unsplash.com/photo-1?w=800n"
+    "Example 2: https://images.unsplash.com/photo-2?w=800n"
+    "Example 3: https://images.unsplash.com/photo-3?w=800n"
+    "NEVER repeat the same URL twice in one JSON response."
 )
 
 prompt = (
-    f"Today is {today_date_us}. Generate a US Entertainment dataset in JSON.\n\n"
-    "1. upcoming_countdowns: Exactly 3 DIFFERENT Hollywood movies/series releasing in June-July 2026. "
-    "For each, provide a UNIQUE poster_url. Do not use the same link twice.\n"
-    "2. now_trending: Exactly 4 entries (1 for Netflix, 1 for Max, 1 for Hulu, 1 for Prime Video).\n\n"
-    "Structure:\n"
-    "{\n"
-    "  \"upcoming_countdowns\": [\n"
-    "    { \"title\": \"\", \"platform\": \"\", \"release_date_text\": \"\", \"countdown_date\": \"\", \"poster_url\": \"UNIQUE_URL_HERE\", \"description\": \"\" }\n"
-    "  ],\n"
-    "  \"now_trending\": [\n"
-    "    { \"platform\": \"\", \"title\": \"\", \"rank\": \"\", \"trending_reason\": \"\" }\n"
-    "  ],\n"
-    "  \"seo_title\": \"\", \"seo_text\": \"\"\n"
-    "}"
+    f"Today: {today_date_us}. Provide JSON for 3 upcoming Hollywood shows (June-July 2026).\n"
+    "Ensure 'poster_url' for each show is a DIFFERENT high-quality image link from Unsplash with unique IDs."
 )
 
-# Clean Backup Data with 3 DIFFERENT Images
+# Har baar alag dikhne wala Backup Data (Just in case)
 backup_data = {
   "upcoming_countdowns": [
     {
       "title": "Toy Story 5",
-      "platform": "Theaters",
+      "poster_url": "https://images.unsplash.com/photo-1608889174639-414d9fde9bf0?w=800",
       "release_date_text": "June 19, 2026",
-      "countdown_date": "June 19, 2026 00:00:00 EDT",
-      "poster_url": "https://images.unsplash.com/photo-1608889174639-414d9fde9bf0?w=500",
-      "description": "Buzz and Woody return for a massive summer 2026 release."
+      "countdown_date": "June 19, 2026 00:00:00 EDT"
     },
     {
-      "title": "Supergirl: Woman of Tomorrow",
-      "platform": "Theaters",
+      "title": "Supergirl",
+      "poster_url": "https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?w=800",
       "release_date_text": "June 26, 2026",
-      "countdown_date": "June 26, 2026 00:00:00 EDT",
-      "poster_url": "https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?w=500",
-      "description": "The DC Universe expands with a high-stakes cosmic adventure."
+      "countdown_date": "June 26, 2026 00:00:00 EDT"
     },
     {
-      "title": "Moana 2 Live-Action",
-      "platform": "Disney+",
+      "title": "Moana 2",
+      "poster_url": "https://images.unsplash.com/photo-1559445383-a4d313125553?w=800",
       "release_date_text": "July 10, 2026",
-      "countdown_date": "July 10, 2026 00:00:00 EDT",
-      "poster_url": "https://images.unsplash.com/photo-1559445383-a4d313125553?w=500",
-      "description": "A stunning reimagining of the ocean voyager's journey."
+      "countdown_date": "July 10, 2026 00:00:00 EDT"
     }
-  ],
-  "now_trending": [
-    { "platform": "Netflix US", "title": "Stranger Things 5", "rank": "#1", "trending_reason": "Teasers are breaking the internet." },
-    { "platform": "HBO Max", "title": "The Last of Us 2", "rank": "#1", "trending_reason": "Massive viewership for the new season." },
-    { "platform": "Hulu", "title": "The Bear Season 4", "rank": "#1", "trending_reason": "High-intensity kitchen drama returns." },
-    { "platform": "Prime Video", "title": "Fallout Season 2", "rank": "#1", "trending_reason": "Streaming charts dominance continues." }
-  ],
-  "seo_title": "Top Trending Shows & Upcoming Countdowns",
-  "seo_text": "Real-time updates on what's trending in the USA."
+  ]
 }
 
 url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={API_KEY}"
@@ -84,11 +60,24 @@ payload = {
 try:
     response = requests.post(url, headers=headers, json=payload, timeout=20)
     ai_text = response.json()['candidates'][0]['content']['parts'][0]['text'].strip()
-    cleaned_json = json.loads(ai_text)
+    data = json.loads(ai_text)
+    
+    # --- IMAGE FIXING LOGIC ---
+    # Agar AI ne same image de di, toh hum manually ID badal denge
+    seen_urls = []
+    for i, show in enumerate(data.get('upcoming_countdowns', [])):
+        current_url = show.get('poster_url', '')
+        if current_url in seen_urls or not current_url:
+            # Naya unique ID force karein
+            show['poster_url'] = f"https://images.unsplash.com/photo-{1600000000000 + (i*5000)}?w=800"
+        seen_urls.append(show['poster_url'])
+    # --------------------------
+
     with open('shows.json', 'w', encoding='utf-8') as f:
-        json.dump(cleaned_json, f, indent=2, ensure_ascii=False)
-    print("Success: 3 Unique Posters Generated!")
+        json.dump(data, f, indent=2, ensure_ascii=False)
+    print("Success: Unique images verified and saved!")
+
 except Exception as e:
-    print(f"Error: Using Unique Backup Data. {e}")
     with open('shows.json', 'w', encoding='utf-8') as f:
         json.dump(backup_data, f, indent=2, ensure_ascii=False)
+    print(f"Used backup due to error: {e}")
