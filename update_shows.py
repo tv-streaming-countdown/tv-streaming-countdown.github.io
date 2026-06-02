@@ -149,11 +149,12 @@ try:
     ai_text = response_data['candidates'][0]['content']['parts'][0]['text'].strip()
     cleaned_json = json.loads(ai_text)
     
-    with open('shows.json', 'w') as f:
-        json.dump(cleaned_json, f, indent=2)
+    # Emoji and special character preservation fix
+    with open('shows.json', 'w', encoding='utf-8') as f:
+        json.dump(cleaned_json, f, indent=2, ensure_ascii=False)
     print("Successfully updated via Gemini US Multi-Platform Engine!")
 
 except Exception as e:
     print(f"API Error, saving multi-platform backup data: {e}")
-    with open('shows.json', 'w') as f:
-        json.dump(backup_data, f, indent=2)
+    with open('shows.json', 'w', encoding='utf-8') as f:
+        json.dump(backup_data, f, indent=2, ensure_ascii=False)
