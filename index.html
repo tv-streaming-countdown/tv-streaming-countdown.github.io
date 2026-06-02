@@ -219,74 +219,22 @@
 
         <div class="section-title">🎬 Hot New Trailers</div>
         <div class="grid" id="trailers-grid">
-            <div class="card netflix">
-                <span class="badge">Netflix • New Trailer</span>
-                <h3 class="trailer-title">Wednesday Season 2 Official Teaser</h3>
-                <div class="loading">Loading live trailer stream...</div>
-            </div>
-            <div class="card hbo">
-                <span class="badge">HBO Max • Hot Trailer</span>
-                <h3 class="trailer-title">The Last of Us Season 2 Premiere Trailer</h3>
-                <div class="loading">Loading live trailer stream...</div>
-            </div>
+            <div class="loading">Loading hot movie & series trailers...</div>
         </div>
 
         <div class="section-title">🇺🇸 Anticipated US Premieres</div>
         <div class="grid" id="shows-grid">
-            <div class="card netflix">
-                <span class="badge">Netflix • Coming Soon</span>
-                <h2>Stranger Things Season 5</h2>
-                <div class="timer">
-                    <div class="t-block"><span>--</span><label>Days</label></div>
-                    <div class="t-block"><span>--</span><label>Hrs</label></div>
-                    <div class="t-block"><span>--</span><label>Min</label></div>
-                    <div class="t-block"><span>--</span><label>Sec</label></div>
-                </div>
-                <p class="desc">The final showdown in Hawkins. Track the exact release hour countdown for Netflix US.</p>
-            </div>
-            <div class="card hbo">
-                <span class="badge">HBO Max • Live Timer</span>
-                <h2>House of the Dragon Season 3</h2>
-                <div class="timer">
-                    <div class="t-block"><span>--</span><label>Days</label></div>
-                    <div class="t-block"><span>--</span><label>Hrs</label></div>
-                    <div class="t-block"><span>--</span><label>Min</label></div>
-                    <div class="t-block"><span>--</span><label>Sec</label></div>
-                </div>
-                <p class="desc">The Dance of the Dragons continues. Real-time premiere countdown for Max subscribers.</p>
-            </div>
+            <div class="loading">Loading upcoming US premieres...</div>
         </div>
 
         <div class="section-title">🔥 What Americans Are Watching Right Now</div>
         <div class="grid" id="trending-grid">
-            <div class="card netflix">
-                <div>
-                    <span class="rank-tag">#1 Trending</span>
-                    <span class="badge">Netflix US</span>
-                </div>
-                <h2>Bridgerton</h2>
-                <p class="desc">Leading the US charts this week due to massive weekend viewership and social media trends across TikTok and Twitter.</p>
-            </div>
-            <div class="card hbo">
-                <div>
-                    <span class="rank-tag">#2 Trending</span>
-                    <span class="badge">Max</span>
-                </div>
-                <h2>The White Lotus</h2>
-                <p class="desc">Captivating millions of American viewers with its latest dark comedy mystery twists and stellar ensemble cast.</p>
-            </div>
+            <div class="loading">Loading live US streaming charts...</div>
         </div>
 
         <div class="seo-section" id="seo-content">
             <h3>Track Upcoming US TV Series & Movies Releases</h3>
-            <p>Welcome to the ultimate hub for American cord-cutters and cinema enthusiasts. Our real-time countdown tracking engine monitors official release schedules, time zones, and exact premiere hours across major United States OTT services. Never miss a midnight drop on Netflix, an 9 PM EST Sunday premiere on HBO Max, or the latest Hulu originals.</p>
-            
-            <h4>Why Use Our Live Release Timers?</h4>
-            <ul>
-                <li><strong>Dynamic US Timezones:</strong> Timers adapt instantly to accurately reflect Eastern (EST) and Pacific (PST) release intervals.</li>
-                <li><strong>Multi-Platform Coverage:</strong> One dashboard tracking Netflix US, Max, Hulu, Amazon Prime Video, and major theatrical releases.</li>
-                <li><strong>Curated US Charts:</strong> Updated daily based on true domestic streaming numbers and trending audience discussions in America.</li>
-            </ul>
+            <p>Welcome to the ultimate hub for American cord-cutters and cinema enthusiasts. Our real-time countdown tracking engine monitors official release schedules, time zones, and exact premiere hours across major United States OTT services.</p>
         </div>
     </div>
 
@@ -295,7 +243,7 @@
             .then(res => res.json())
             .then(data => {
                 const getPlatformClass = (platformStr) => {
-                    const p = platformStr.toLowerCase();
+                    const p = platformStr ? platformStr.toLowerCase() : '';
                     if(p.includes('netflix')) return 'netflix';
                     if(p.includes('hbo') || p.includes('max')) return 'hbo';
                     if(p.includes('hulu')) return 'hulu';
@@ -304,10 +252,11 @@
                     return '';
                 };
 
-                // 0. Render Latest Trailers
+                // 0. Fixed Trailers Rendering Logic
                 const trailersGrid = document.getElementById('trailers-grid');
                 if(data.latest_trailers && data.latest_trailers.length > 0) {
-                    trailersGrid.innerHTML = ''; // Ab yahan fallback content saaf hoga jab data load hoga
+                    trailersGrid.innerHTML = ''; // Pehle poora container khali hoga
+                    
                     const firstVideoId = data.latest_trailers[0].youtube_video_id;
                     if(firstVideoId) {
                         document.getElementById('discover-og-image').setAttribute('content', `https://img.youtube.com/vi/${firstVideoId}/maxresdefault.jpg`);
@@ -315,7 +264,7 @@
 
                     data.latest_trailers.forEach((trailer) => {
                         const card = document.createElement('div');
-                        const platformClass = getPlatformClass(trailer.platform || '');
+                        const platformClass = getPlatformClass(trailer.platform);
                         card.className = `card ${platformClass}`;
                         card.innerHTML = `
                             <span class="badge">${trailer.platform || 'Trending'} • New Trailer</span>
@@ -332,6 +281,8 @@
                         `;
                         trailersGrid.appendChild(card);
                     });
+                } else {
+                    trailersGrid.innerHTML = '<div class="loading">No trailers available right now.</div>';
                 }
 
                 // 1. Render Upcoming Countdowns
@@ -359,6 +310,8 @@
                         grid.appendChild(card);
                         setupTimer(show.countdown_date, idPrefix);
                     });
+                } else {
+                    grid.innerHTML = '<div class="loading">No upcoming shows found.</div>';
                 }
 
                 // 2. Render Multi-Platform Live Trending List
@@ -379,6 +332,8 @@
                         `;
                         trendingGrid.appendChild(card);
                     });
+                } else {
+                    trendingGrid.innerHTML = '<div class="loading">Trending charts update scheduled tonight.</div>';
                 }
 
                 // 3. Render SEO Paragraphs
@@ -386,7 +341,9 @@
                     document.getElementById('seo-content').innerHTML = `<h3>${data.seo_title}</h3><p>${data.seo_text}</p>`;
                 }
             }).catch(err => {
-                console.log("JSON load failed, showing high-value fallback items.");
+                document.getElementById('trailers-grid').innerHTML = '<div class="loading">Failed to load trailers.</div>';
+                document.getElementById('shows-grid').innerHTML = '<div class="loading">Failed to load timers. Please refresh.</div>';
+                document.getElementById('trending-grid').innerHTML = '<div class="loading">Failed to load charts.</div>';
             });
 
         function setupTimer(dateStr, idPrefix) {
